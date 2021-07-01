@@ -21,7 +21,6 @@
               <th>STT</th>
               <th>Tiêu đề</th>
               <th>Danh mục sản phẩm</th>
-              {{-- <th>Is Featured</th> --}}
               <th>Giá</th>
               <th>Giảm giá</th>
               <th>Nhãn hiệu</th>
@@ -43,14 +42,7 @@
                 <tr>
                     <td>{{$product->id}}</td>
                     <td>{{$product->title}}</td>
-                    <td>{{$product->cat_info['title']}}
-                      {{-- <sub>
-                        @foreach($sub_cat_info as $data)
-                          {{$data->title}}
-                        @endforeach
-                      </sub> --}}
-                    </td>
-                    {{-- <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td> --}}
+                    <td>{{(($product->cat_info==null)?"":$product->cat_info['title'])}}</td>
                     <td>{{$product->price}} đ</td>
                     <td>  {{$product->discount}}% OFF</td>
                     <td>@foreach($brands as $brand) {{$brand->title}} @endforeach</td>

@@ -31,13 +31,6 @@
           @enderror
         </div>
 
-
-        {{-- <div class="form-group">
-          <label for="is_featured">Is Featured</label><br>
-          <input type="checkbox" name='is_featured' id='is_featured' value='1' checked> Yes                        
-        </div> --}}
-              {{-- {{$categories}} --}}
-
         <div class="form-group">
           <label for="cat_id">Danh mục sản phẩm <span class="text-danger">*</span></label>
           <select name="cat_id" id="cat_id" class="form-control">
@@ -145,50 +138,6 @@
           height: 150
       });
     });
-    // $('select').selectpicker();
 
 </script>
-
-{{-- <script>
-  $('#cat_id').change(function(){
-    var cat_id=$(this).val();
-    // alert(cat_id);
-    if(cat_id !=null){
-      // Ajax call
-      $.ajax({
-        url:"/admin/category/"+cat_id+"/child",
-        data:{
-          _token:"{{csrf_token()}}",
-          id:cat_id
-        },
-        type:"POST",
-        success:function(response){
-          if(typeof(response) !='object'){
-            response=$.parseJSON(response)
-          }
-          // console.log(response);
-          var html_option="<option value=''>----Select sub category----</option>"
-          if(response.status){
-            var data=response.data;
-            // alert(data);
-            if(response.data){
-              $('#child_cat_div').removeClass('d-none');
-              $.each(data,function(id,title){
-                html_option +="<option value='"+id+"'>"+title+"</option>"
-              });
-            }
-            else{
-            }
-          }
-          else{
-            $('#child_cat_div').addClass('d-none');
-          }
-          $('#child_cat_id').html(html_option);
-        }
-      });
-    }
-    else{
-    }
-  })
-</script> --}}
 @endpush

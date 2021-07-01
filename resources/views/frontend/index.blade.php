@@ -15,7 +15,7 @@
         <div class="carousel-inner" role="listbox">
                 @foreach($banners as $key=>$banner)
                 <div class="carousel-item {{(($key==0)? 'active' : '')}}">
-                    <img class="first-slide" src="{{$banner->photo}}" alt="First slide">
+                    <img class="first-slide" src="{{$banner->photo}}" alt="First slide" style="">
                     <div class="carousel-caption d-none d-md-block text-left">
                         <h1 class="wow fadeInDown">{{$banner->title}}</h1>
                         <p>{!! html_entity_decode($banner->description) !!}</p>
@@ -55,7 +55,7 @@
                             <!-- Tab Nav -->
                             <ul class="nav nav-tabs filter-tope-group" id="myTab" role="tablist">
                                 @php 
-                                    $categories=DB::table('categories')->where('status','active')->where('is_parent',1)->get();
+                                    $categories=DB::table('categories')->where('status','active')->get();
                                     // dd($categories);
                                 @endphp
                                 @if($categories)
@@ -126,7 +126,7 @@
 </div>
 <!-- End Product Area -->
 @php
-    $featured=DB::table('products')->where('is_featured',1)->where('status','active')->orderBy('id','DESC')->limit(1)->get();
+    $featured=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(1)->get();
 @endphp
 
 <!-- Start Most Popular -->

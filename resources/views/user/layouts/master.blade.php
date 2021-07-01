@@ -29,6 +29,8 @@
       </div>
       <!-- End of Main Content -->
       @include('user.layouts.footer')
+  
+      
 
 </body>
 

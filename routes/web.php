@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['register'=>false]);
 
+
 Route::get('user/login','FrontendController@login')->name('login.form');
 Route::post('user/login','FrontendController@loginSubmit')->name('login.submit');
 Route::get('user/logout','FrontendController@logout')->name('user.logout');
@@ -26,6 +27,7 @@ Route::get('forget-password', 'Auth\ForgotPasswordController@showForgetPasswordF
 Route::post('forget-password', 'Auth\ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
 Route::get('reset-password/{token}', 'Auth\ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
 Route::post('reset-password', 'Auth\ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+
 
 Route::get('/','FrontendController@home')->name('home');
 
@@ -143,6 +145,8 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 
 
 // User section start
+//Auth::routes(['verify' => true]);
+
 Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     Route::get('/','HomeController@index')->name('user');
      // Profile
@@ -173,3 +177,6 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');

@@ -86,6 +86,14 @@
 				</div>
 			</div>
 		</div>
+		<!-- Messenger Plugin chat Code -->
+		<div id="fb-root"></div>
+
+		<!-- Your Plugin chat code -->
+		<div id="fb-customer-chat" class="fb-customerchat">
+		</div>
+	
+		
 	</footer>
 	<!-- /End Footer Area -->
  
@@ -114,7 +122,7 @@
 	<!-- Flex Slider JS -->
 	<script src="{{asset('frontend/js/flex-slider.js')}}"></script>
 	<!-- ScrollUp JS -->
-	<script src="{{asset('frontend/js/scrollup.js')}}"></script>
+	{{-- <script src="{{asset('frontend/js/scrollup.js')}}"></script> --}}
 	<!-- Onepage Nav JS -->
 	<script src="{{asset('frontend/js/onepage-nav.min.js')}}"></script>
 	{{-- Isotope --}}
@@ -128,28 +136,23 @@
 
 	
 	@stack('scripts')
-	<script>
-		setTimeout(function(){
-		  $('.alert').slideUp();
-		},5000);
-		$(function() {
-		// ------------------------------------------------------- //
-		// Multi Level dropdowns
-		// ------------------------------------------------------ //
-			$("ul.dropdown-menu [data-toggle='dropdown']").on("click", function(event) {
-				event.preventDefault();
-				event.stopPropagation();
 
-				$(this).siblings().toggleClass("show");
+<script>
+	var chatbox = document.getElementById('fb-customer-chat');
+	chatbox.setAttribute("page_id", "100322862315531");
+	chatbox.setAttribute("attribution", "biz_inbox");
+	window.fbAsyncInit = function() {
+	  FB.init({
+		xfbml            : true,
+		version          : 'v11.0'
+	  });
+	};
 
-
-				if (!$(this).next().hasClass('show')) {
-				$(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
-				}
-				$(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
-				$('.dropdown-submenu .show').removeClass("show");
-				});
-
-			});
-		});
-	  </script>
+	(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+  </script>

@@ -31,7 +31,7 @@ class ProductController extends Controller
     public function create()
     {
         $brand=Brand::get();
-        $category=Category::where('is_parent',1)->get();
+        $category=Category::get();
         // return $category;
         return view('backend.product.create')->with('categories',$category)->with('brands',$brand);
     }
@@ -53,8 +53,8 @@ class ProductController extends Controller
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
             'brand_id'=>'nullable|exists:brands,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
+            // 'child_cat_id'=>'nullable|exists:categories,id',
+            // 'is_featured'=>'sometimes|in:1',
             'status'=>'required|in:active,inactive',
             'price'=>'required|numeric',
             'discount'=>'nullable|numeric'
@@ -67,7 +67,7 @@ class ProductController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        $data['is_featured']=$request->input('is_featured',0);
+        // $data['is_featured']=$request->input('is_featured',0);
     
         $status=Product::create($data);
         if($status){
@@ -101,7 +101,7 @@ class ProductController extends Controller
     {
         $brand=Brand::get();
         $product=Product::findOrFail($id);
-        $category=Category::where('is_parent',1)->get();
+        $category=Category::get();
         $items=Product::where('id',$id)->get();
         // return $items;
         return view('backend.product.edit')->with('product',$product)
@@ -126,8 +126,8 @@ class ProductController extends Controller
             'photo'=>'string|required',
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
+            // 'child_cat_id'=>'nullable|exists:categories,id',
+            // 'is_featured'=>'sometimes|in:1',
             'brand_id'=>'nullable|exists:brands,id',
             'status'=>'required|in:active,inactive',
             'price'=>'required|numeric',
@@ -135,13 +135,13 @@ class ProductController extends Controller
         ]);
 
         $data=$request->all();
-        $data['is_featured']=$request->input('is_featured',0);
+        // $data['is_featured']=$request->input('is_featured',0);
         $status=$product->fill($data)->save();
         if($status){
             request()->session()->flash('success','Cập nhật sản phẩm thành công');
         }
         else{
-            request()->session()->flash('error','Please try again!!');
+            request()->session()->flash('error','Vui lòng thử lại!!');
         }
         return redirect()->route('product.index');
     }

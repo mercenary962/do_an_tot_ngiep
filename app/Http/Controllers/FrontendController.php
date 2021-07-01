@@ -24,12 +24,12 @@ class FrontendController extends Controller
     }
 
     public function home(){
-        $featured=Product::where('status','active')->where('is_featured',1)->orderBy('price','DESC')->limit(2)->get();
+        $featured=Product::where('status','active')->orderBy('price','DESC')->limit(2)->get();
         $posts=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
         $banners=Banner::where('status','active')->limit(3)->orderBy('id','DESC')->get();
         // return $banner;
         $products=Product::where('status','active')->orderBy('id','DESC')->limit(8)->get();
-        $category=Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+        $category=Category::where('status','active')->orderBy('title','ASC')->get();
         // return $category;
         return view('frontend.index')
                 // ->with('featured',$featured)
@@ -205,12 +205,12 @@ class FrontendController extends Controller
     public function productBrand(Request $request){
         $products=Brand::getProductByBrand($request->slug);
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
-        }
-        else{
+        // if(request()->is('e-shop.loc/product-grids')){
+        //     return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
+        // }
+        // else{
             return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
-        }
+        // }
 
     }
     public function productCat(Request $request){
@@ -218,27 +218,27 @@ class FrontendController extends Controller
         // return $request->slug;
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
 
-        if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
-        }
-        else{
+        // if(request()->is('e-shop.loc/product-grids')){
+        //     return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
+        // }
+        // else{
             return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
-        }
+        // }
 
     }
-    public function productSubCat(Request $request){
-        $products=Category::getProductBySubCat($request->sub_slug);
-        // return $products;
-        $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
+    // public function productSubCat(Request $request){
+    //     $products=Category::getProductBySubCat($request->sub_slug);
+    //     // return $products;
+    //     $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
 
-        if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->sub_products)->with('recent_products',$recent_products);
-        }
-        else{
-            return view('frontend.pages.product-lists')->with('products',$products->sub_products)->with('recent_products',$recent_products);
-        }
+    //     if(request()->is('e-shop.loc/product-grids')){
+    //         return view('frontend.pages.product-grids')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+    //     }
+    //     else{
+    //         return view('frontend.pages.product-lists')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+    //     }
 
-    }
+    // }
 
     public function blog(){
         $post=Post::query();

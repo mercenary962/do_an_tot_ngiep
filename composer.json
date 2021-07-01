@@ -19,7 +19,7 @@
         "laravel/ui": "^2.1",
         "pusher/pusher-php-server": "^4.1",
         "spatie/laravel-newsletter": "^4.10",
-        "unisharp/laravel-filemanager": "^2.1"
+        "unisharp/laravel-filemanager": "^2.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

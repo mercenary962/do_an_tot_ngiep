@@ -15,6 +15,7 @@
             <th>Mã đơn hàng</th>
             <th>Họ tên</th>
             <th>Email</th>
+            <th>Tên sản phẩm</th>
             <th>Số lượng</th>
             <th>Phí vận chuyển</th>
             <th>Tổng tiền</th>
@@ -31,6 +32,16 @@
             <td>{{$order->order_number}}</td>
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
+            @foreach($order->cart_info as $cart)
+                @php 
+                  $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
+                @endphp
+                <td>
+                  @foreach($product as $pro)
+                    {{$pro->title}}
+                  @endforeach
+                </td>
+            @endforeach
             <td>{{$order->quantity}}</td>
             <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
             <td>{{number_format($order->total_amount)}} đ</td>
@@ -75,6 +86,19 @@
                     <tr>
                         <td>Ngày đặt</td>
                         <td> : {{$order->created_at->diffForHumans()}}</td>
+                    </tr>
+                    <tr>
+                      <td>Tên sản phẩm</td>
+                      @foreach($order->cart_info as $cart)
+                          @php 
+                            $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
+                          @endphp
+                          <td>
+                            @foreach($product as $pro)
+                              : {{$pro->title}}
+                            @endforeach
+                          </td>
+                      @endforeach
                     </tr>
                     <tr>
                         <td>Số lượng</td>
