@@ -28,7 +28,7 @@ class Helper{
             ?>
             
             <li>
-            <a href="javascript:void(0);">Danh mục sản phẩm<i class="ti-angle-down"></i></a>
+            <a href="javascript:void(0);"><span class="menu-header">Danh mục sản phẩm <i class="fa fa-bars"></i></a>
                 <ul class="dropdown border-0 shadow">
                 <?php
                     foreach($menu as $cat_info){

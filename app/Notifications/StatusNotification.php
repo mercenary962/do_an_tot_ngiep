@@ -38,15 +38,6 @@ class StatusNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    // public function toMail($notifiable)
-    // {
-    //     return (new MailMessage)
-    //                 ->subject('Status Notification')
-    //                 ->from(env('MAIL_USERNAME','test@gmail.com'),'E-shop')
-    //                 ->line($this->details['title'])
-    //                 ->action('View Order', $this->details['actionURL'])
-    //                 ->line('Thank you!');
-    // }
 
     /**
      * Get the array representation of the notification.
@@ -54,14 +45,7 @@ class StatusNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    // public function toArray($notifiable)
-    // {
-    //     return [
-    //         'title'=>$this->details['title'],
-    //         'actionURL'=>$this->details['actionURL'],
-    //         'fas'=>$this->details['fas']
-    //     ];
-    // }
+ 
     public function toArray($notifiable)
     {
         return [

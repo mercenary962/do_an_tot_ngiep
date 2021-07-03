@@ -145,7 +145,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 
 
 // User section start
-//Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 
 Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     Route::get('/','HomeController@index')->name('user');
@@ -177,6 +177,7 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-Auth::routes();
+//Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/', 'HomeController@home')->name('home');
+//Route::get('/','FrontendController@home')->name('home');
