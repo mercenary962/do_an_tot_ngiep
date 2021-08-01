@@ -48,7 +48,7 @@
                                         @error('password')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
-                                    </div>
+                                    </div> 
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group login-btn">
@@ -57,7 +57,8 @@
                                         <a href="{{route('register.form')}}" class="btn">Đăng ký</a>
                                     </div>
                                     <div class="checkbox">
-                                        <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Ghi nhớ đăng nhập</label>
+                                        <label class="form-check-label" for="remember"><input class="form-check-input" type="checkbox" name="remember" id="remember" value="1"> Ghi nhớ đăng nhập</label>
+                                        
                                     </div>
                                     
                                     <label>

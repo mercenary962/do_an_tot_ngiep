@@ -111,6 +111,21 @@
             <i class="fas fa-comments"></i>
             <span>Đánh giá</span></a>
     </li>
+
+    <!--- Statistics -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statisticCollapse" aria-expanded="true" aria-controls="statisticCollapse">
+        <i class="fas fa-chart-bar"></i>
+        <span>Thống kê</span></a>
+        <div id="statisticCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Tùy chọn:</h6>
+            <a class="collapse-item" href="{{route('statistics.order')}}">Thống kê doanh thu</a>
+            {{-- <a class="nav-link" href="{{route('statistics.order')}}">Thống kê doanh thu</a> --}}
+            {{-- <a class="collapse-item" href="{{route('brand.create')}}">Thêm Nhãn hiệu</a> --}}
+          </div>
+        </div>
+    </li>
     
 
     <!-- Divider -->

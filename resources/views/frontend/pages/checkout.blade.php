@@ -46,7 +46,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Tên<span>*</span></label>
-                                            <input type="text" name="last_name" placeholder="" value="{{old('lat_name')}}">
+                                            <input type="text" name="last_name" placeholder="" value="{{old('last_name')}}">
                                             @error('last_name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -142,6 +142,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Địa chỉ nhận hàng<span>*</span></label>
@@ -153,9 +154,12 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <div class="form-group message">
+                                        <div class="form-group">
                                             <label>Ghi chú thêm<span>*</span></label>
-                                            <textarea name="message" id="message" cols="30" rows="9" placeholder="Nếu có yêu cầu gì, hãy để lại thông tin ở đây nhé" value="{{old('notes')}}"></textarea>
+                                            <textarea name="notes" cols="30" rows="9" placeholder="Nếu có yêu cầu gì, hãy để lại thông tin ở đây nhé" value="{{old('notes')}}"></textarea>
+                                            @error('notes')
+                                                <span class='text-danger'>{{$message}}</span>
+                                            @enderror
                                         </div>
                                     </div>
                             
@@ -212,6 +216,7 @@
                                             {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
                                             <form-group>
                                                 <input name="payment_method"  type="radio" value="cod"> <label>Thanh toán khi nhận hàng</label><br>
+                                                <input name="payment_method"  type="radio" value="vnpay"> <label>Thanh toán online bằng VNPAY</label> 
                                             </form-group>
                                             
                                         </div>

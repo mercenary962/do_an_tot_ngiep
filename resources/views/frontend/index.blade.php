@@ -2,9 +2,7 @@
 @section('title','Trang chủ')
 @section('main-content')
 <!-- Slider Area -->
-<section class="hero-slider">
-  
-</section>
+
 @if(count($banners)>0)
     <section id="Gslider" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -15,12 +13,12 @@
         <div class="carousel-inner" role="listbox">
                 @foreach($banners as $key=>$banner)
                 <div class="carousel-item {{(($key==0)? 'active' : '')}}">
-                    <img class="first-slide" src="{{$banner->photo}}" alt="First slide" style="">
-                    <div class="carousel-caption d-none d-md-block text-left">
+                    <img class="d-block w-100" src="{{$banner->photo}}" alt="First slide" style="max-height:550px !important; ">
+                    <!-- {{-- <div class="carousel-caption d-none d-md-block text-left">
                         <h1 class="wow fadeInDown">{{$banner->title}}</h1>
                         <p>{!! html_entity_decode($banner->description) !!}</p>
                         <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" role="button">Mua ngay<i class="far fa-arrow-alt-circle-right"></i></i></a>
-                    </div>
+                    </div> --}} -->
                 </div>  
             @endforeach   
         </div>
@@ -34,6 +32,7 @@
         </a>
     </section>
 @endif
+
 
 
 
@@ -84,7 +83,7 @@
                                                 <a href="{{route('product-detail',$product->slug)}}">
                                                     @php 
                                                         $photo=explode(',',$product->photo);
-                                                    // dd($photo);
+                                                    //  dd($product->title);
                                                     @endphp
                                                     <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                                     <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}" >
@@ -145,39 +144,41 @@
             <div class="col-12">
                 <div class="owl-carousel popular-slider">
                     @foreach($product_lists as $product)
+                    @php 
+                        $after_discount=($product->price-($product->price*$product->discount)/100)
+                    @endphp
                             <!-- Start Single Product -->
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="{{route('product-detail',$product->slug)}}">
-                                    @php 
-                                        $photo=explode(',',$product->photo);
-                                    @endphp
-                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                </a>
-                                <div class="button-head">
-                                    <div class="product-action">
-                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Mua ngay</span></a>
-                                        <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Thêm vào yêu thích</span></a>
-                                    </div>
-                                    <div class="product-action-2">
-                                        <a href="{{route('add-to-cart',$product->slug)}}">Thêm vào giỏ hàng</a>
+                        @if ($after_discount < $product->price)
+                            <div class="single-product">
+                                <div class="product-img">
+                                    <a href="{{route('product-detail',$product->slug)}}">
+                                        @php 
+                                            $photo=explode(',',$product->photo);
+                                        @endphp
+                                        <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                        <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    </a>
+                                    <div class="button-head">
+                                        <div class="product-action">
+                                            <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Mua ngay</span></a>
+                                            <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Thêm vào yêu thích</span></a>
+                                        </div>
+                                        <div class="product-action-2">
+                                            <a href="{{route('add-to-cart',$product->slug)}}">Thêm vào giỏ hàng</a>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="product-content">
+                                    <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
+                                    <div class="product-price">
+                                            <span class="old">{{number_format($product->price)}} đ</span>
+                                            <span>{{number_format($after_discount)}} đ</span>
+                                    </div>
+                                </div> 
                             </div>
-                            <div class="product-content">
-                                <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
-                                <div class="product-price">
-                                    <span class="old">{{number_format($product->price)}} đ</span>
-                                    @php 
-                                    $after_discount=($product->price-($product->price*$product->discount)/100)
-                                    @endphp
-                                    <span>{{number_format($after_discount)}} đ</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Product -->
-                        {{-- @endif --}}
+                            <!-- End Single Product -->
+                            {{-- @endif --}}
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -200,7 +201,7 @@
                 </div>
                 <div class="row">
                     @php
-                        $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(6)->get();
+                        $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(3)->get();
                     @endphp
                     @foreach($product_lists as $product)
                         <div class="col-md-4">
@@ -270,7 +271,7 @@
 <!-- End Shop Blog  -->
 
 <!-- Start Shop Services Area -->
-<section class="shop-services section">
+{{-- <section class="shop-services section">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-12">
@@ -311,7 +312,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End Shop Services Area -->
 
 

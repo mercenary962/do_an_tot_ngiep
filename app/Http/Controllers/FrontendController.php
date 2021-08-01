@@ -205,25 +205,16 @@ class FrontendController extends Controller
     public function productBrand(Request $request){
         $products=Brand::getProductByBrand($request->slug);
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        // if(request()->is('e-shop.loc/product-grids')){
-        //     return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
-        // }
-        // else{
-            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
-        // }
+        return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
+
 
     }
     public function productCat(Request $request){
         $products=Category::getProductByCat($request->slug);
         // return $request->slug;
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-
-        // if(request()->is('e-shop.loc/product-grids')){
-        //     return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
-        // }
-        // else{
-            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
-        // }
+        return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
+    
 
     }
 
@@ -329,6 +320,7 @@ class FrontendController extends Controller
     }
     public function loginSubmit(Request $request){
         $data= $request->all();
+        //$remember = $request->get('remember');
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
             Session::put('user',$data['email']);
             request()->session()->flash('success','Đăng nhập thành công');
@@ -339,6 +331,19 @@ class FrontendController extends Controller
             return redirect()->back();
         }
     }
+
+
+    // public function loginSubmit(Request $request){
+    //         $remember = $request->get('remember_token');
+    //         if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 'active'], $remember))
+    //         {
+    //             return redirect('home');
+    //         }
+    
+    //         return back()->withInput()->with('message', 'Login Failed');
+    //     }
+
+
 
     public function logout(){
         Session::forget('user');

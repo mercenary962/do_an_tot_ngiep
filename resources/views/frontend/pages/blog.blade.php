@@ -127,31 +127,7 @@
                             @endforeach
                         </div>
                         <!--/ End Single Widget -->
-                        <!-- Single Widget -->
-                        <!--/ End Single Widget -->
-                        <!-- Single Widget -->
-
-                        {{-- <div class="single-widget side-tags">
-                            <h3 class="title">Thẻ</h3>
-                            <ul class="tag">
-                                @if(!empty($_GET['tag']))
-                                    @php 
-                                        $filter_tags=explode(',',$_GET['tag']);
-                                    @endphp
-                                @endif
-                                <form action="{{route('blog.filter')}}" method="POST">
-                                    @csrf
-                                    @foreach(Helper::postTagList('posts') as $tag)
-                                        <li>
-                                            <li>
-                                                <a href="{{route('blog.tag',$tag->title)}}">{{$tag->title}} </a>
-                                            </li>
-                                        </li>
-                                    @endforeach
-                                </form>
-                            </ul>
-                        </div> --}}
-                        
+                     
                         <!--/ End Single Widget -->
                         <!-- Single Widget -->
                         <div class="single-widget newsletter">

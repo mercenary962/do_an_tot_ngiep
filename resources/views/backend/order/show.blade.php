@@ -15,7 +15,7 @@
             <th>Mã đơn hàng</th>
             <th>Họ tên</th>
             <th>Email</th>
-            <th>Tên sản phẩm</th>
+            {{-- <th>Tên sản phẩm</th> --}}
             <th>Số lượng</th>
             <th>Phí vận chuyển</th>
             <th>Tổng tiền</th>
@@ -24,24 +24,26 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        
+          {{-- @foreach($order->cart_info as $cart)
+          @php 
+            $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
+          @endphp --}}
+          <tr>
             @php
-                $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
+              $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
             @endphp
             <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
-            @foreach($order->cart_info as $cart)
-                @php 
-                  $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
-                @endphp
-                <td>
+           
+                {{-- <td>
                   @foreach($product as $pro)
                     {{$pro->title}}
                   @endforeach
-                </td>
-            @endforeach
+                </td> --}}
+            
             <td>{{$order->quantity}}</td>
             <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
             <td>{{number_format($order->total_amount)}} đ</td>
@@ -66,6 +68,7 @@
             </td>
           
         </tr>
+        {{-- @endforeach --}}
       </tbody>
     </table>
 
@@ -87,7 +90,7 @@
                         <td>Ngày đặt</td>
                         <td> : {{$order->created_at->diffForHumans()}}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                       <td>Tên sản phẩm</td>
                       @foreach($order->cart_info as $cart)
                           @php 
@@ -99,7 +102,7 @@
                             @endforeach
                           </td>
                       @endforeach
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>Số lượng</td>
                         <td> : {{$order->quantity}}</td>
@@ -126,11 +129,11 @@
                     </tr>
                     <tr>
                         <td>Phương thức thanh toán</td>
-                        <td> : </td>
+                        <td> : {{$order->payment_method}}</td>
                     </tr>
                     <tr>
                         <td>Trạng thái thanh toán</td>
-                        <td> : </td>
+                        <td> : {{$order->payment_status}}</td>
                     </tr>
               </table>
             </div>

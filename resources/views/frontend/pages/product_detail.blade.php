@@ -298,7 +298,7 @@
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
-                                                <a data-toggle="modal" data-target="#modelExample" title="Quick View" href="#"><i class=" ti-eye"></i><span>Mua nhan</span></a>
+                                                <a data-toggle="modal" data-target="#modelExample" title="Quick View" href="#"><i class=" ti-eye"></i><span>Mua nhanh</span></a>
                                                 <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Thêm vào Sản phẩm yêu thích</span></a>
                                                 <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
                                             </div>
@@ -313,8 +313,8 @@
                                             @php 
                                                 $after_discount=($data->price-(($data->discount*$data->price)/100));
                                             @endphp
-                                            <span class="old">{{number_format($data->price)}} dd</span>
-                                            <span>{{number_format($after_discount)}} dd</span>
+                                            <span class="old">{{number_format($data->price)}} đ</span>
+                                            <span>{{number_format($after_discount)}} đ</span>
                                         </div>
                                       
                                     </div>

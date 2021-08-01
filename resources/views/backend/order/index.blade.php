@@ -21,7 +21,7 @@
               <th>Mã đơn hàng</th>
               <th>Họ tên</th>
               <th>Email</th>
-              <th>Tên sản phẩm</th>
+              {{-- <th>Tên sản phẩm</th> --}}
               <th>Số lượng</th>
               <th>Phí vận chuyển</th>
               <th>Tổng tiền</th>
@@ -34,45 +34,54 @@
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
             @endphp 
-                <tr>
-                    <td>{{$order->id}}</td>
-                    <td>{{$order->order_number}}</td>
-                    <td>{{$order->first_name}} {{$order->last_name}}</td>
-                    <td>{{$order->email}}</td>
-                    @foreach($order->cart_info as $cart)
-                      @php 
-                        $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
-                      @endphp
+              {{-- @foreach($order->cart_info as $cart)
+              @php 
+                $product=DB::table('products')->where('id',$cart->product_id)->pluck('title'); 
+              @endphp --}}
+                  <tr>
+                      <td>{{$order->id}}</td>
+                      <td>{{$order->order_number}}</td>
+                      <td>{{$order->first_name}} {{$order->last_name}}</td>
+                      <td>{{$order->email}}</td>
+                      
+                        
+                          {{-- @foreach($product as $pro)
+                            @if(count($product)>1){
+                              <tr>
+                                <td>{{$pro->title}}</td>
+                              </tr>
+                            }
+                            @else
+                              <td>{{$pro->title}}</td>
+                            @endif
+                          @endforeach --}}
+                        
+                      
+                      <td>{{$order->quantity}}</td>
+                      <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
+                      <td>{{number_format($order->total_amount)}} đ</td>
                       <td>
-                        @foreach($product as $pro)
-                          {{$pro->title}}
-                        @endforeach
+                          @if($order->status=='new')
+                            <span class="badge badge-primary">Đang xử lý</span>
+                          @elseif($order->status=='process')
+                            <span class="badge badge-warning">Đang giao hàng</span>
+                          @elseif($order->status=='delivered')
+                            <span class="badge badge-success">Giao hàng thành công</span>
+                          @else
+                            <span class="badge badge-danger">Đã hủy</span>
+                          @endif
                       </td>
-                    @endforeach
-                    <td>{{$order->quantity}}</td>
-                    <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
-                    <td>{{number_format($order->total_amount)}} đ</td>
-                    <td>
-                        @if($order->status=='new')
-                          <span class="badge badge-primary">Đang xử lý</span>
-                        @elseif($order->status=='process')
-                          <span class="badge badge-warning">Đang giao hàng</span>
-                        @elseif($order->status=='delivered')
-                          <span class="badge badge-success">Giao hàng thành công</span>
-                        @else
-                          <span class="badge badge-danger">Đã hủy</span>
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{route('order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                        <form method="POST" action="{{route('order.destroy',[$order->id])}}">
-                          @csrf 
-                          @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                        </form>
-                    </td>
-                </tr>  
+                      <td>
+                          <a href="{{route('order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                          <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                          <form method="POST" action="{{route('order.destroy',[$order->id])}}">
+                            @csrf 
+                            @method('delete')
+                                <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                          </form>
+                      </td>
+                  </tr>  
+                {{-- @endforeach --}}
             @endforeach
           </tbody>
         </table>

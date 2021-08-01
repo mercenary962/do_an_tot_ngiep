@@ -39,7 +39,6 @@ Route::post('/contact/message','MessageController@store')->name('contact.store')
 Route::get('product-detail/{slug}','FrontendController@productDetail')->name('product-detail');
 Route::post('/product/search','FrontendController@productSearch')->name('product.search');
 Route::get('/product-cat/{slug}','FrontendController@productCat')->name('product-cat');
-Route::get('/product-sub-cat/{slug}/{sub_slug}','FrontendController@productSubCat')->name('product-sub-cat');
 Route::get('/product-brand/{slug}','FrontendController@productBrand')->name('product-brand');
 // Cart section
 Route::get('/add-to-cart/{slug}','CartController@addToCart')->name('add-to-cart')->middleware('user');
@@ -62,6 +61,10 @@ Route::get('wishlist-delete/{id}','WishlistController@wishlistDelete')->name('wi
 Route::post('cart/order','OrderController@store')->name('cart.order');
 Route::get('order/pdf/{id}','OrderController@pdf')->name('order.pdf');
 Route::get('/income','OrderController@incomeChart')->name('product.order.income');
+
+// Payment Online
+Route::post('payment/online','OrderController@createPayment')->name('payment');
+Route::get('vnpay/return','OrderController@returnPayment')->name('vnpay.return');
 
 Route::get('/product-grids','FrontendController@productGrids')->name('product-grids');
 Route::get('/product-lists','FrontendController@productLists')->name('product-lists');
@@ -91,7 +94,14 @@ Route::resource('/comment','PostCommentController');
 Route::post('/coupon-store','CouponController@couponStore')->name('coupon-store');
 
 
+// Route::post('payment/online', 'PaymentController@payment')->name('payment');
+// Route::post('payment/order','PaymentController@store')->name('payment.order');
+// Route::get('payment/success', 'PaymentController@success')->name('payment.success'); 
+
 // Backend section start
+
+// Statistics
+Route::get('statistics/order','Statistic\OrderReportController@index')->name('statistics.order');
 
 Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::get('/','AdminController@index')->name('admin');
@@ -180,4 +190,4 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 //Auth::routes();
 
 // Route::get('/', 'HomeController@home')->name('home');
-//Route::get('/','FrontendController@home')->name('home');
+// Route::get('/','FrontendController@home')->name('home');

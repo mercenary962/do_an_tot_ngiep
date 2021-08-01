@@ -74,9 +74,9 @@ class Helper{
         }
     }
     // relationship cart with product
-    public function product(){
-        return $this->hasOne('App\Models\Product','id','product_id');
-    }
+    // public function product(){
+    //     return $this->hasOne('App\Models\Product','id','product_id');
+    // }
 
     public static function getAllProductFromCart($user_id=''){
         if(Auth::check()){
@@ -128,17 +128,17 @@ class Helper{
     }
 
     // Total price with shipping and coupon
-    public static function grandPrice($id,$user_id){
-        $order=Order::find($id);
-        dd($id);
-        if($order){
-            $shipping_price=(float)$order->shipping->price;
-            $order_price=self::orderPrice($id,$user_id);
-            return number_format((float)($order_price+$shipping_price),2,'.','');
-        }else{
-            return 0;
-        }
-    }
+    // public static function grandPrice($id,$user_id){
+    //     $order=Order::find($id);
+    //     dd($id);
+    //     if($order){
+    //         $shipping_price=(float)$order->shipping->price;
+    //         $order_price=self::orderPrice($id,$user_id);
+    //         return number_format((float)($order_price+$shipping_price),2,'.','');
+    //     }else{
+    //         return 0;
+    //     }
+    // }
 
 
     // Admin home

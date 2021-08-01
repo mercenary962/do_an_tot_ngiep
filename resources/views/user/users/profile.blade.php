@@ -12,7 +12,7 @@
     </div>
    <div class="card-header py-3">
      <h4 class=" font-weight-bold">Thông tin tài khoản</h4>
-     <ul class="breadcrumbs">
+     <ul class="breadcrumbs"> 
          <li><a href="{{route('admin')}}" style="color:#999">Dashboard</a></li>
          <li><a href="" class="active text-primary">Thông tin tài khoản</a></li>
      </ul>
