@@ -33,16 +33,17 @@
             @foreach($orders as $order)  
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
+                $users=DB::table('users')->where('id',$order->user_id)->get(); 
             @endphp 
-              {{-- @foreach($order->cart_info as $cart)
-              @php 
-                $product=DB::table('products')->where('id',$cart->product_id)->pluck('title'); 
-              @endphp --}}
+              {{-- @foreach($order->cart_info as $cart) --}}
+              
                   <tr>
                       <td>{{$order->id}}</td>
                       <td>{{$order->order_number}}</td>
-                      <td>{{$order->first_name}} {{$order->last_name}}</td>
-                      <td>{{$order->email}}</td>
+                      @foreach($users as $user)
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->email}}</td>
+                      @endforeach
                       
                         
                           {{-- @foreach($product as $pro)

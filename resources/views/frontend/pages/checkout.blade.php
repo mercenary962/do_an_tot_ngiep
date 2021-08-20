@@ -36,17 +36,8 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Họ<span>*</span></label>
-                                            <input type="text" name="first_name" placeholder="" value="{{old('first_name')}}" value="{{old('first_name')}}">
-                                            @error('first_name')
-                                                <span class='text-danger'>{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Tên<span>*</span></label>
-                                            <input type="text" name="last_name" placeholder="" value="{{old('last_name')}}">
+                                            <label>Họ tên<span>*</span></label>
+                                            <input type="text" name="last_name" placeholder="" value="{{auth()->user()->name}}">
                                             @error('last_name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -55,7 +46,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Địa chỉ Email<span>*</span></label>
-                                            <input type="email" name="email" placeholder="" value="{{old('email')}}">
+                                            <input type="email" name="email" placeholder="" value="{{auth()->user()->email}}">
                                             @error('email')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -64,89 +55,17 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Số điện thoại <span>*</span></label>
-                                            <input type="number" name="phone" placeholder="" required value="{{old('phone')}}">
+                                            <input type="text" name="phone" placeholder="" value="{{auth()->user()->phone}}">
                                             @error('phone')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Thành phố<span>*</span></label>
-                                            <select name="city" id="city">
-                                                <option value="Tp.Cần Thơ">Tp.Cần Thơ</option>
-                                                <option value="Tp.Đà Nẵng">Tp.Đà Nẵng</option>
-                                                <option value="Tp.Hải Phòng">Tp.Hải Phòng</option>
-                                                <option value="Tp.Hà Nội">Tp.Hà Nội</option>
-                                                <option value="TP  HCM">TP HCM</option>
-                                                <option value="An Giang">An Giang</option>
-                                                <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
-                                                <option value="Bắc Giang">Bắc Giang</option>
-                                                <option value="Bắc Kạn">Bắc Kạn</option>
-                                                <option value="Bạc Liêu">Bạc Liêu</option>
-                                                <option value="Bắc Ninh">Bắc Ninh</option>
-                                                <option value="Bến Tre">Bến Tre</option>
-                                                <option value="Bình Định">Bình Định</option>
-                                                <option value="Bình Dương">Bình Dương</option>
-                                                <option value="Bình Phước">Bình Phước</option>
-                                                <option value="Bình Thuận">Bình Thuận</option>
-                                                <option value="Bình Thuận">Bình Thuận</option>
-                                                <option value="Cà Mau">Cà Mau</option>
-                                                <option value="Cao Bằng">Cao Bằng</option>
-                                                <option value="Đắk Lắk">Đắk Lắk</option>
-                                                <option value="Đắk Nông">Đắk Nông</option>
-                                                <option value="Điện Biên">Điện Biên</option>
-                                                <option value="Đồng Nai">Đồng Nai</option>
-                                                <option value="Đồng Tháp">Đồng Tháp</option>
-                                                <option value="Đồng Tháp">Đồng Tháp</option>
-                                                <option value="Gia Lai">Gia Lai</option>
-                                                <option value="Hà Giang">Hà Giang</option>
-                                                <option value="Hà Nam">Hà Nam</option>
-                                                <option value="Hà Tĩnh">Hà Tĩnh</option>
-                                                <option value="Hải Dương">Hải Dương</option>
-                                                <option value="Hậu Giang">Hậu Giang</option>
-                                                <option value="Hòa Bình">Hòa Bình</option>
-                                                <option value="Hưng Yên">Hưng Yên</option>
-                                                <option value="Khánh Hòa">Khánh Hòa</option>
-                                                <option value="Kiên Giang">Kiên Giang</option>
-                                                <option value="Kon Tum">Kon Tum</option>
-                                                <option value="Lai Châu">Lai Châu</option>
-                                                <option value="Lâm Đồng">Lâm Đồng</option>
-                                                <option value="Lạng Sơn">Lạng Sơn</option>
-                                                <option value="Lào Cai">Lào Cai</option>
-                                                <option value="Long An">Long An</option>
-                                                <option value="Nam Định">Nam Định</option>
-                                                <option value="Nghệ An">Nghệ An</option>
-                                                <option value="Ninh Bình">Ninh Bình</option>
-                                                <option value="Ninh Thuận">Ninh Thuận</option>
-                                                <option value="Phú Thọ">Phú Thọ</option>
-                                                <option value="Quảng Bình">Quảng Bình</option>
-                                                <option value="Quảng Bình">Quảng Bình</option>
-                                                <option value="Quảng Ngãi">Quảng Ngãi</option>
-                                                <option value="Quảng Ninh">Quảng Ninh</option>
-                                                <option value="Quảng Trị">Quảng Trị</option>
-                                                <option value="Sóc Trăng">Sóc Trăng</option>
-                                                <option value="Sơn La">Sơn La</option>
-                                                <option value="Tây Ninh">Tây Ninh</option>
-                                                <option value="Thái Bình">Thái Bình</option>
-                                                <option value="Thái Nguyên">Thái Nguyên</option>
-                                                <option value="Thanh Hóa">Thanh Hóa</option>
-                                                <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
-                                                <option value="Tiền Giang">Tiền Giang</option>
-                                                <option value="Trà Vinh">Trà Vinh</option>
-                                                <option value="Tuyên Quang">Tuyên Quang</option>
-                                                <option value="Vĩnh Long">Vĩnh Long</option>
-                                                <option value="Vĩnh Phúc">Vĩnh Phúc</option>
-                                                <option value="Yên Bái">Yên Bái</option>
-                                                <option value="Phú Yên">Phú Yên</option>
-                                            </select>
                                         </div>
                                     </div>
                                     
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Địa chỉ nhận hàng<span>*</span></label>
-                                            <input type="text" name="address" placeholder="" value="{{old('address')}}">
+                                            <input type="text" name="address" placeholder="" value="{{auth()->user()->address}}">
                                             @error('address')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -185,8 +104,6 @@
                                                         <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: {{$shipping->price}} đ</option>
                                                         @endforeach
                                                     </select>
-                                                @else 
-                                                    <span>Free</span>
                                                 @endif
                                             </li>
                                             
@@ -247,50 +164,7 @@
     </section>
     <!--/ End Checkout -->
     
-    <!-- Start Shop Services Area  -->
-    <section class="shop-services section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-rocket"></i>
-						<h4>Miễn phí vận chuyển</h4>
-						<p>Các đơn hàng trên 5.000.000VND</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-reload"></i>
-						<h4>Miễn phí đổi trả</h4>
-						<p>Đổi trả trong vòng 30 ngày</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-lock"></i>
-						<h4>Bảo mật thanh toán</h4>
-						<p>100% bảo mật thanh toán</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-tag"></i>
-						<h4>Giá tốt nhất</h4>
-						<p>Gía cả được đảm bảo</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-			</div>
-		</div>
-	</section>
-    <!-- End Shop Services -->
+    
 
 @endsection
 @push('styles')

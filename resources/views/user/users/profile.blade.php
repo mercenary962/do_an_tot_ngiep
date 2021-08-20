@@ -40,36 +40,52 @@
                     @csrf
                     <div class="form-group">
                         <label for="inputTitle" class="col-form-label">Họ tên</label>
-                      <input id="inputTitle" type="text" name="name" placeholder="Nhập họ tên"  value="{{$profile->name}}" class="form-control">
-                      @error('name')
-                      <span class="text-danger">{{$message}}</span>
-                      @enderror
-                      </div>
+                        <input id="inputTitle" type="text" name="name" placeholder="Nhập họ tên"  value="{{$profile->name}}" class="form-control">
+                        @error('name')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
               
-                      <div class="form-group">
-                          <label for="inputEmail" class="col-form-label">Email</label>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-form-label">Email</label>
                         <input id="inputEmail" disabled type="email" name="email" placeholder="Nhập Email"  value="{{$profile->email}}" class="form-control">
                         @error('email')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
-                      </div>
-              
-                      <div class="form-group">
-                      <label for="inputPhoto" class="col-form-label">Avatar</label>
-                      <div class="input-group">
-                          <span class="input-group-btn">
-                              <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                              <i class="fa fa-picture-o"></i> Chọn ảnh 
-                              </a>
-                          </span>
-                          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$profile->photo}}">
-                      </div>
-                        @error('photo')
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputTitle" class="col-form-label">Địa chỉ</label>
+                        <input id="inputTitle" type="text" name="address" placeholder="Nhập địa chỉ"  value="{{$profile->address}}" class="form-control">
+                        @error('address')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
-                      </div>
+                    </div>
 
-                        <button type="submit" class="btn btn-success btn-sm">Cập nhật</button>
+                    <div class="form-group">
+                        <label for="inputTitle" class="col-form-label">Số điện thoại</label>
+                        <input id="inputTitle" type="text" name="phone" placeholder="Nhập số điện thoại"  value="{{$profile->phone}}" class="form-control">
+                        @error('phone')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+              
+                    <div class="form-group">
+                    <label for="inputPhoto" class="col-form-label">Avatar</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                            <i class="fa fa-picture-o"></i> Chọn ảnh 
+                            </a>
+                        </span>
+                        <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$profile->photo}}">
+                    </div>
+                    @error('photo')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-sm">Cập nhật</button>
                 </form>
             </div>
         </div>

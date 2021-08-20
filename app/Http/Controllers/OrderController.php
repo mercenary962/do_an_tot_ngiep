@@ -53,13 +53,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'first_name'=>'string|required',
-            'last_name'=>'string|required',
-            'address'=>'string|required',
             'notes'=>'string|nullable',
             'coupon'=>'nullable|numeric',
-            'phone'=>'numeric|required',
-            'email'=>'string|required'
         ]);
         // return $request->all();
         $product = Product::where('slug', $request->slug)->first();
@@ -104,12 +99,16 @@ class OrderController extends Controller
             $total_money = str_replace(',','', Helper::totalCartPrice());
             $order_data['payment_method']='vnpay';
             $order_data['payment_status']='paid';
-            return view('frontend/pages/vnpay/index', compact('total_money'), $order_data);
+            $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
+            return view('frontend/pages/vnpay/index', compact('total_money'), $order_data, $shipping);
         }
         else{
             $order_data['payment_method']='cod';
             $order_data['payment_status']='Unpaid';
         }
+        // if($request->status=='delivered' && $request->payment_method=='cod'){
+        //     $order_data['payment_status']='paid';
+        // }
         $order->fill($order_data);
         $order->save();
         if($order)
@@ -141,7 +140,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         $order=Order::find($id);
         // return $order;
@@ -171,7 +170,7 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $this->validate($request,[
-            'status'=>'required|in:new,process,delivered,cancel'
+            'status'=>'required|in:new,process,delivered,cancel',
         ]);
         $data=$request->all();
         // return $request->status;
@@ -190,6 +189,9 @@ class OrderController extends Controller
                 $product->stock +=$cart->quantity;
                 $product->save();
             }
+        }
+        if(($request->method=='cod') && ($request->status=='delivered')){
+            $order->payment_status='paid';
         }
         $status=$order->fill($data)->save();
         if($status){
@@ -298,8 +300,6 @@ class OrderController extends Controller
     }
 
 
-
-
     // VNPAY
     public function createPayment(Request $request){
         session(['cost_id' => $request->id]);
@@ -308,11 +308,21 @@ class OrderController extends Controller
         $vnp_HashSecret = env('VNP_HASH_SECRET'); //Chuỗi bí mật
         $vnp_Url = env('VNP_URL');
         $vnp_Returnurl = route('vnpay.return');
+        $vnp_BankCode = $request->input('bank_code');
         $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $request->input('amount') * 100;
-        $vnp_Locale = 'vn';
+
+        //Billing
+        $vnp_Bill_Mobile = $request->input('phone');
+        $vnp_Bill_Email = $request->input('email');
+
+        $vnp_Bill_Name = $request->input('name');
+
+        $vnp_Bill_Address = $request->input('address');
+
+        $vnp_Locale = $request->input('language');
         $vnp_IpAddr = request()->ip();
 
         $inputData = array(
@@ -322,6 +332,12 @@ class OrderController extends Controller
             "vnp_Command" => "pay",
             "vnp_CreateDate" => date('YmdHis'),
             "vnp_CurrCode" => "VND",
+
+            "vnp_Bill_Mobile"=>$vnp_Bill_Mobile,
+            "vnp_Bill_Email"=>$vnp_Bill_Email,
+            "vnp_Bill_Name"=>$vnp_Bill_Name,
+            "vnp_Bill_Address"=>$vnp_Bill_Address,
+
             "vnp_IpAddr" => $vnp_IpAddr,
             "vnp_Locale" => $vnp_Locale,
             "vnp_OrderInfo" => $vnp_OrderInfo,
@@ -363,37 +379,88 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function returnPayment(Request $request){
+
+        
+        session(['cost_id' => $request->id]);
+        session(['url_prev' => url()->previous()]);
+        $vnp_TmnCode = env('VNP_TMN_CODE'); //Mã website tại VNPAY 
+        $vnp_HashSecret = env('VNP_HASH_SECRET'); //Chuỗi bí mật
+        $vnp_Url = env('VNP_URL');
+        $vnp_Returnurl = route('vnpay.return');
+        $vnp_BankCode = $request->input('bank_code');
+        $vnp_TxnRef = 'SMD-'.strtoupper(Str::random(10)); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+        $vnp_OrderType = 'billpayment';
+        $vnp_Amount = $request->input('amount') * 100;
      
         if($request->vnp_ResponseCode == "00") {
  
             $vnpayData = $request->all();
 
-            dd($vnpayData);
-    
-        //     $cart = Cart::where('user_id',auth()->user()->id)->where('order_id',null)->get()->toArray();
-        // // dd($cart);
+            // dd($vnpayData);
 
-        // $data = [];
+            $order = new Order();
+            
 
-        // $order = Order::with(['cart_info'])->where('order_id', null)->get();
-        $order = new Order();
-            dd($order->toArray());
-            foreach($order as $item){
-                $dataPayment = [
-                    'order_id' => $item->id,
-                    'vnp_transaction_code' => $vnpayData['vnp_TxnRef'],
-                    'user_id' => $item->user_id,
-                    'money' => $item->total_amount,
-                    'notes' => $vnpayData['vnp_OrderInfo'],
-                    'vpn_response_code' => $vnpayData['vnp_ResponseCode'],
-                    'code_vnpay' => $vnpayData['vnp_TransactionNo'],
-                    'code_bank' => $vnpayData['vnp_BankCode'],
-                    'time' => date('Y-m-h H:i', strtotime($vnpayData['vnp_PayDate'])),
-                ];
-            // $payment->fill($dataPayment);
-            // $payment->save();
-                DB::table('payments')->insert($dataPayment);
+            $order->order_number='SMD-'.strtoupper(Str::random(10));
+            $order->product_id=Cart::where('user_id', auth()->user()->id)->pluck('product_id')->first();
+            $order->user_id=$request->user()->id;
+            $order->shipping_id=5;
+            $shipping=Shipping::where('id',$order->shipping_id)->pluck('price');
+            // return session('coupon')['value'];
+            $order->sub_total=Helper::totalCartPrice();
+            $order->quantity=Helper::cartCount();
+            if(session('coupon')){
+                $order->coupon=session('coupon')['value'];
             }
+            if($request->shipping){
+                if(session('coupon')){
+                    $order->total_amount=Helper::totalCartPrice()+$shipping[0]-session('coupon')['value'];
+                }
+                else{
+                    $order->total_amount=Helper::totalCartPrice()+$shipping[0];
+                }
+            }
+            else{
+                if(session('coupon')){
+                    $order->total_amount=Helper::totalCartPrice()-session('coupon')['value'];
+                }
+                else{
+                    $order->total_amount=Helper::totalCartPrice();
+                }
+            }
+            // return $order_data['total_amount'];
+            $order->status="new";
+    
+            $order->payment_method='vnpay';
+            $order->payment_status='paid';
+
+            $status=$order->save();
+            if($order)
+            $users=User::where('role','admin')->first();
+            $details=[
+                'title'=>'Một đơn hàng mới đã được tạo',
+                'actionURL'=>route('order.show',$order->id),
+                'fas'=>'fa-file-alt'
+            ];
+            Notification::send($users, new StatusNotification($details));
+          
+            Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+
+            $dataPayment = [
+                'order_id' => $order->id,
+                'vnp_transaction_code' => $vnpayData['vnp_TxnRef'],
+                'user_id' => $order->user_id,
+                'total_money' => $order->total_amount,
+                'notes' => $vnpayData['vnp_OrderInfo'],
+                'vnp_response_code' => $vnpayData['vnp_ResponseCode'],
+                'code_vnpay' => $vnpayData['vnp_TransactionNo'],
+                'code_bank' => $vnpayData['vnp_BankCode'],
+                'time' => date('Y-m-h H:i', strtotime($vnpayData['vnp_PayDate'])),
+            ];
+
+            DB::table('payments')->insert($dataPayment);
+        
             request()->session()->flash('success' ,'Đã thanh toán phí dịch vụ');
             return view('frontend/pages/vnpay/vnpay_return', compact('vnpayData'));
         }

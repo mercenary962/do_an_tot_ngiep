@@ -26,11 +26,13 @@
         <tr>
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
+                $users=DB::table('users')->where('id',$order->user_id)->get(); 
             @endphp
             <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
-            <td>{{$order->first_name}} {{$order->last_name}}</td>
-            <td>{{$order->email}}</td>
+            @foreach($users as $user)
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->email}}</td>
             <td>{{$order->quantity}}</td>
             <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
             <td>{{number_format($order->total_amount)}} đ</td>
@@ -93,12 +95,12 @@
                         <td> : {{number_format($order->total_amount)}} đ</td>
                     </tr>
                     <tr>
-                        <td>Phương thức thanh toán</td>
-                        <td> : </td>
+                      <td>Phương thức thanh toán</td>
+                      <td> : {{$order->payment_method}}</td>
                     </tr>
                     <tr>
                         <td>Trạng thái thanh toán</td>
-                        <td> : </td>
+                        <td> : {{$order->payment_status}}</td>
                     </tr>
               </table>
             </div>
@@ -108,32 +110,33 @@
             <div class="shipping-info">
               <h4 class="text-center pb-4">THÔNG TIN VẬN CHUYỂN</h4>
               <table class="table">
-                    <tr class="">
-                        <td>Họ và tên</td>
-                        <td> : {{$order->first_name}} {{$order->last_name}}</td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td> : {{$order->email}}</td>
-                    </tr>
-                    <tr>
-                        <td>Số điện thoại</td>
-                        <td> : {{$order->phone}}</td>
-                    </tr>
-                    <tr>
-                        <td>Địa chỉ</td>
-                        <td> : {{$order->address}}</td>
-                    </tr>
-                    <tr>
-                        <td>Ghi chú</td>
-                        <td> : {{$order->notes}}</td>
-                    </tr>
+                <tr class="">
+                  <td>Họ và tên</td>
+                  <td> : {{$user->name}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td> : {{$user->email}}</td>
+                </tr>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td> : {{$user->phone}}</td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ</td>
+                    <td> : {{$user->address}}</td>
+                </tr>
+                <tr>
+                    <td>Ghi chú</td>
+                    <td> : {{$order->notes}}</td>
+                </tr>
               </table>
             </div>
           </div>
         </div>
       </div>
     </section>
+    @endforeach
     @endif
 
   </div>

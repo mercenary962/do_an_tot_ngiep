@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -19,6 +20,8 @@ class UsersTableSeeder extends Seeder
                 'password'=>Hash::make('123456'),
                 'role'=>'admin',
                 'status'=>'active',
+                'phone'=>'0986747812',
+                'address'=>'Thanh Nhan',
                 'remember_token' => str_random(10),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -28,6 +31,8 @@ class UsersTableSeeder extends Seeder
                 'email'=>'user@gmail.com',
                 'password'=>Hash::make('123456'),
                 'role'=>'user',
+                'phone'=>'0986747812',
+                'address'=>'Quan 7',
                 'status'=>'active',
                 'remember_token' => str_random(10),
                 'created_at' => date('Y-m-d H:i:s'),

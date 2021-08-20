@@ -13,6 +13,8 @@ use App\Notifications\StatusNotification;
 use App\User;
 use Illuminate\Support\Str;
 use Helper;
+use PhpParser\Node\Expr\FuncCall;
+
 class PaymentController extends Controller
 {
     public function payment(Request $request){
@@ -27,7 +29,7 @@ class PaymentController extends Controller
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $request->input('amount') * 100;
         $vnp_FirstName = $request->input('first_name');
-        $vnp_LastName = $request->input('last_name') * 100;
+        $vnp_LastName = $request->input('last_name');
         $vnp_Email = $request->input('email');
         $vnp_PhoneNumber = $request->input('phone');
         $vnp_Address = $request->input('address');
@@ -78,6 +80,10 @@ class PaymentController extends Controller
             $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
         }
         return redirect($vnp_Url);
+    }
+
+    public function createOrder(Request $request){
+        
     }
 
    

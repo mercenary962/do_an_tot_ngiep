@@ -22,53 +22,43 @@
                 <h3 class="text-muted">VNPAY RESPONSE</h3>
             </div>
             <div class="table-responsive">
-                <div class="form-group">
-                    <label >Mã đơn hàng:</label>
+                <form action="{{ route('vnpay.return') }}" method="GET">       
+                    @csrf
+                    <div class="form-group">
+                        <label >Mã đơn hàng: {{ $vnpayData['vnp_TxnRef'] }}</label>
+                        <label></label>
+                    </div>    
+                    <div class="form-group">
 
-                    <label><?php echo $_GET['vnp_TxnRef'] ?></label>
-                </div>    
-                <div class="form-group">
-
-                    <label >Số tiền:</label>
-                    <label><?php echo $_GET['vnp_Amount'] ?></label>
-                </div>  
-                <div class="form-group">
-                    <label >Nội dung thanh toán:</label>
-                    <label><?php echo $_GET['vnp_OrderInfo'] ?></label>
-                </div> 
-                <div class="form-group">
-                    <label >Mã phản hồi (vnp_ResponseCode):</label>
-                    <label><?php echo $_GET['vnp_ResponseCode'] ?></label>
-                </div> 
-                <div class="form-group">
-                    <label >Mã GD Tại VNPAY:</label>
-                    <label><?php echo $_GET['vnp_TransactionNo'] ?></label>
-                </div> 
-                <div class="form-group">
-                    <label >Mã Ngân hàng:</label>
-                    <label><?php echo $_GET['vnp_BankCode'] ?></label>
-                </div> 
-                <div class="form-group">
-                    <label >Thời gian thanh toán:</label>
-                    <label><?php echo $_GET['vnp_PayDate'] ?></label>
-                </div> 
-                <div class="form-group">
-                    <label >Kết quả:</label>
-                    <label>
-                        <?php
-                        if ($secureHash == $vnp_SecureHash) {
-                            if ($_GET['vnp_ResponseCode'] == '00') {
-                                echo "GD Thanh cong";
-                            } else {
-                                echo "GD Khong thanh cong";
-                            }
-                        } else {
-                            echo "Chu ky khong hop le";
-                        }
-                        ?>
-
-                    </label>
-                </div> 
+                        <label >Số tiền: {{ number_format($vnpayData['vnp_Amount'] / 100,0,',','.') }} VND</label>
+                        <label></label>
+                    </div>  
+                    <div class="form-group">
+                        <label >Nội dung thanh toán: {{ $vnpayData['vnp_OrderInfo'] }}</label>
+                        <label></label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã phản hồi (vnp_ResponseCode): {{ $vnpayData['vnp_ResponseCode'] }}</label>
+                        <label></label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã GD Tại VNPAY: {{ $vnpayData['vnp_TransactionNo'] }}</label>
+                        <label></label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã Ngân hàng: {{ $vnpayData['vnp_BankCode'] }}</label>
+                        <label></label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Thời gian thanh toán: {{ date('Y-m-d H:i', strtotime($vnpayData['vnp_PayDate'])) }}</label>
+                        <label></label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Kết quả: GD Thanh cong</label>
+                        <label>
+                        </label>
+                    </div> 
+                </form>
             </div>
             <p>
                 &nbsp;

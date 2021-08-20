@@ -32,12 +32,17 @@
           </thead>
           <tbody>
             @if(count($orders)>0)
-              @foreach($orders as $order)   
+              @foreach($orders as $order) 
+              @php
+                $users=DB::table('users')->where('id',$order->user_id)->get(); 
+              @endphp  
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->order_number}}</td>
-                    <td>{{$order->first_name}} {{$order->last_name}}</td>
-                    <td>{{$order->email}}</td>
+                    @foreach($users as $user)
+                      <td>{{$user->name}}</td>
+                      <td>{{$user->email}}</td>
+                    @endforeach
                     <td>{{$order->quantity}}</td>
                     <td>{{number_format($order->total_amount)}} đ</td>
                     <td>

@@ -19,7 +19,8 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->float('total_money')->nullable();
             $table->string('notes')->nullable();
-            $table->string('vpn_response_code', 255)->nullable();
+            $table->string('vnp_response_code', 255)->nullable();
+            $table->string('vnp_transaction_code', 255)->nullable();
             $table->string('code_vnpay', 255)->nullable();
             $table->string('code_bank', 255)->nullable();
             $table->dateTime('time')->nullable();

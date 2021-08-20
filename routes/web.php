@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes(['register'=>false]);
-
+Auth::routes(['register'=>false, 'verify'=>true]);
 
 Route::get('user/login','FrontendController@login')->name('login.form');
 Route::post('user/login','FrontendController@loginSubmit')->name('login.submit');
@@ -94,14 +93,11 @@ Route::resource('/comment','PostCommentController');
 Route::post('/coupon-store','CouponController@couponStore')->name('coupon-store');
 
 
-// Route::post('payment/online', 'PaymentController@payment')->name('payment');
-// Route::post('payment/order','PaymentController@store')->name('payment.order');
-// Route::get('payment/success', 'PaymentController@success')->name('payment.success'); 
-
 // Backend section start
 
 // Statistics
-Route::get('statistics/order','Statistic\OrderReportController@index')->name('statistics.order');
+Route::get('statistics/revenue','Statistic\RevenueStatisticController@index')->name('statistics.revenue');
+Route::get('statistics/order','Statistic\OrderStatisticController@index')->name('statistics.order');
 
 Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::get('/','AdminController@index')->name('admin');
@@ -155,8 +151,6 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 
 
 // User section start
-Auth::routes(['verify' => true]);
-
 Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     Route::get('/','HomeController@index')->name('user');
      // Profile

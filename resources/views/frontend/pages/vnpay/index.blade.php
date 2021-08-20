@@ -42,45 +42,47 @@
 
 
                     <div class="form-group">
-                        <label for="first_name">Họ:</label>
-                        <input class="form-control" id="first_name"
-                               name="first_name" type="text" value="{{ $first_name }}"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="last_name">Ten:</label>
-                        <input class="form-control" id="last_name"
-                               name="last_name" type="text" value="{{ $last_name }}"/>
+                        <label for="name">Họ:</label>
+                        <input class="form-control" id="name"
+                               name="name" type="text" value="{{ auth()->user()->name }}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input class="form-control" id="email"
-                               name="email" type="text" value="{{ $email }}"/>
+                               name="email" type="text" value="{{ auth()->user()->email }}"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="address">Dia chi:</label>
+                        <label for="address">Địa chỉ:</label>
                         <input class="form-control" id="address"
-                               name="address" type="text" value="{{ $address }}"/>
+                               name="address" type="text" value="{{ auth()->user()->address }}"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">So dien thoai:</label>
+                        <label for="phone">Số điện thoại:</label>
                         <input class="form-control" id="phone"
-                               name="phone" type="text" value="{{ $phone }}"/>
+                               name="phone" type="text" value="{{ auth()->user()->phone }}"/>
                     </div>
 
-                    <div class="form-group">
-                        <label for="shipping">Shipping:</label>
+                    {{-- <div class="form-group">
+                        <label for="shipping">Vận chuyển:</label>
                         <input class="form-control" id="shipping"
                                name="shipping" type="text" value="{{ $shipping }}"/>
-                    </div>
+                        {{-- @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
+                            <select name="shipping" class="form-control">
+                                <option value="">Chọn đơn vị chuyển phát</option>
+                                @foreach(Helper::shipping() as $shipping)
+                                <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: {{$shipping->price}} đ</option>
+                                @endforeach
+                            </select>
+                        @endif --}}
+                    {{-- </div> --}}
 
 
                     <div class="form-group">
                         <label for="order_desc">Nội dung thanh toán</label>
-                        <textarea class="form-control" cols="20" id="order_desc" name="order_desc" rows="2">Noi dung thanh toan</textarea>
+                        <textarea class="form-control" cols="20" id="order_desc" name="order_desc" rows="2" placeholder="Noi dung thanh toan"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="bank_code">Ngân hàng</label>
@@ -119,7 +121,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="btnPopup">Xác nhận thanh toán</button>
-                    <button type="submit" class="btn btn-default" oncanplay="history.back()">Quay trở lại</button>
+                    <button type="submit" class="btn btn-default" onclick="history.back()">Quay trở lại</button>
 
                 </form>
             </div>
@@ -132,32 +134,5 @@
         </div>  
         <link href="https://sandbox.vnpayment.vn/paymentv2/lib/vnpay/vnpay.css" rel="stylesheet"/>
         <script src="https://sandbox.vnpayment.vn/paymentv2/lib/vnpay/vnpay.js"></script>
-        {{-- <script type="text/javascript">
-            $("#btnPopup").click(function () {
-                var postData = $("#create_form").serialize();
-                var submitUrl = $("#create_form").attr("action");
-                $.ajax({
-                    type: "POST",
-                    url: submitUrl,
-                    data: postData,
-                    dataType: 'JSON',
-                    success: function (x) {
-                        if (x.code === '00') {
-                            if (window.vnpay) {
-                                vnpay.open({width: 768, height: 600, url: x.data});
-                            } else {
-                                location.href = x.data;
-                            }
-                            return false;
-                        } else {
-                            alert(x.Message);
-                        }
-                    }
-                });
-                return false;
-            });
-        </script> --}}
-
-
     </body>
 </html>

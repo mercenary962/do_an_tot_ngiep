@@ -6,7 +6,7 @@ use App\Models\Cart;
 
 class Order extends Model
 {
-    protected $fillable=['user_id','product_id','order_number','sub_total','quantity','delivery_charge','status','total_amount','first_name','last_name','notes','address','city','phone','email','payment_method','payment_status','shipping_id','coupon'];
+    protected $fillable=['user_id','product_id','order_number','sub_total','quantity','delivery_charge','status','total_amount','notes','payment_method','payment_status','shipping_id','coupon'];
 
     public function cart_info(){
         return $this->hasMany('App\Models\Cart','order_id','id');

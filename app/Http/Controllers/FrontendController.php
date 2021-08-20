@@ -18,7 +18,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
-   
+    // public function __construct()
+    // {
+    //     $this->middleware(['verified']);
+    // }
     public function index(Request $request){
         return redirect()->route($request->user()->role);
     }
@@ -380,7 +383,9 @@ class FrontendController extends Controller
             'name'=>$data['name'],
             'email'=>$data['email'],
             'password'=>Hash::make($data['password']),
-            'status'=>'active'
+            'status'=>'active',
+            'phone'=>$data['phone'],
+            'address'=>$data['address']
             ]);
     }
     public function subscribe(Request $request){

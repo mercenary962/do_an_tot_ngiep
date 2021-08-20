@@ -52,6 +52,24 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label>Address<span>*</span></label>
+                                        <input type="text" name="address" placeholder="Nhập địa chỉ" required="required" value="{{old('address')}}">
+                                        @error('address')
+                                            <span class="text-danger">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Phone<span>*</span></label>
+                                        <input type="text" name="phone" placeholder="Số điện thoại" required="required" value="{{old('phone')}}">
+                                        @error('phone')
+                                            <span class="text-danger">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
                                         <label>Mật khẩu<span>*</span></label>
                                         <input type="password" name="password" placeholder="Nhập mật khẩu" required="required" value="{{old('password')}}">
                                         @error('password')

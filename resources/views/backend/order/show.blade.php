@@ -15,7 +15,6 @@
             <th>Mã đơn hàng</th>
             <th>Họ tên</th>
             <th>Email</th>
-            {{-- <th>Tên sản phẩm</th> --}}
             <th>Số lượng</th>
             <th>Phí vận chuyển</th>
             <th>Tổng tiền</th>
@@ -32,11 +31,14 @@
           <tr>
             @php
               $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
+              $users=DB::table('users')->where('id',$order->user_id)->get(); 
             @endphp
             <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
-            <td>{{$order->first_name}} {{$order->last_name}}</td>
-            <td>{{$order->email}}</td>
+            @foreach($users as $user)
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->email}}</td>
+           
            
                 {{-- <td>
                   @foreach($product as $pro)
@@ -145,19 +147,19 @@
               <table class="table">
                     <tr class="">
                         <td>Họ và tên</td>
-                        <td> : {{$order->first_name}} {{$order->last_name}}</td>
+                        <td> : {{$user->name}}</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td> : {{$order->email}}</td>
+                        <td> : {{$user->email}}</td>
                     </tr>
                     <tr>
                         <td>Số điện thoại</td>
-                        <td> : {{$order->phone}}</td>
+                        <td> : {{$user->phone}}</td>
                     </tr>
                     <tr>
                         <td>Địa chỉ</td>
-                        <td> : {{$order->address}}</td>
+                        <td> : {{$user->address}}</td>
                     </tr>
                     <tr>
                         <td>Ghi chú</td>
@@ -169,6 +171,7 @@
         </div>
       </div>
     </section>
+    @endforeach
     @endif
 
   </div>

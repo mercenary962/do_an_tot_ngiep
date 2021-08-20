@@ -74,29 +74,35 @@
 </style>
   <div class="invoice-header">
     <div class="float-left site-logo">
-      <img src="{{ public_path('backend/img/logo.gif') }}" alt="#" width="35%" height="100%">
+      <img src="{{ asset('backend/img/logo.gif') }}" alt="logo" width="35%" height="100%">
     </div>
     <div class="float-right site-address">
       <h4>SmartDevice Shop</h4>
-      <p>123 Linh Nam, Hoang Mai, Ha Noi</p>
+      <p>123 Linh Nam, Hoang Mai, Ha Noi</p> 
       <p>Phone number: 0377592469</a></p>
       <p>Email: daotheanh09062@gmail.com</p>
     </div>
     <div class="clearfix"></div>
   </div>
+  @php
+    $users=DB::table('users')->where('id',$order->user_id)->get(); 
+  @endphp
+  @foreach ($users as $user)
+  
   <div class="invoice-description">
     <div class="invoice-left-top float-left">
       <h6>Invoice to</h6>
-       <h3>{{$order->first_name}} {{$order->last_name}}</h3>
+       <h3>{{$user->name}}</h3>
        <div class="address">
         <p>
           <strong>Address: </strong>
-          {{ $order->address }}
+          {{ $user->address }}
         </p>
-         <p><strong>Phone number:</strong> {{ $order->phone }}</p>
-         <p><strong>Email:</strong> {{ $order->email }}</p>
+         <p><strong>Phone number:</strong> {{ $user->phone }}</p>
+         <p><strong>Email:</strong> {{ $user->email }}</p>
        </div>
     </div>
+    @endforeach
     <div class="invoice-right-top float-right" class="text-right">
       <h3>Invoice #{{$order->order_number}}</h3>
       <p>{{ $order->created_at->format('D d m Y') }}</p>
