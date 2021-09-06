@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes(['register'=>false, 'verify'=>true]);
+// Auth::routes(['register'=>false, 'verify'=>true]);
 
 Route::get('user/login','FrontendController@login')->name('login.form');
 Route::post('user/login','FrontendController@loginSubmit')->name('login.submit');

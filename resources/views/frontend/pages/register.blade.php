@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Address<span>*</span></label>
+                                        <label>Địa chỉ<span>*</span></label>
                                         <input type="text" name="address" placeholder="Nhập địa chỉ" required="required" value="{{old('address')}}">
                                         @error('address')
                                             <span class="text-danger">{{$message}}</span>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Phone<span>*</span></label>
+                                        <label>Số điện thoại<span>*</span></label>
                                         <input type="text" name="phone" placeholder="Số điện thoại" required="required" value="{{old('phone')}}">
                                         @error('phone')
                                             <span class="text-danger">{{$message}}</span>

@@ -336,17 +336,6 @@ class FrontendController extends Controller
     }
 
 
-    // public function loginSubmit(Request $request){
-    //         $remember = $request->get('remember_token');
-    //         if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 'active'], $remember))
-    //         {
-    //             return redirect('home');
-    //         }
-    
-    //         return back()->withInput()->with('message', 'Login Failed');
-    //     }
-
-
 
     public function logout(){
         Session::forget('user');
@@ -372,6 +361,7 @@ class FrontendController extends Controller
         if($check){
             request()->session()->flash('success','Đăng ký thành công');
             return redirect()->route('home');
+            // Auth::login($data);
         }
         else{
             request()->session()->flash('error','Vui lòng thử lại!!!');
