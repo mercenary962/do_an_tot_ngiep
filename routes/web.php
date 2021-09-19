@@ -14,14 +14,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Auth::routes(['register'=>false, 'verify'=>true]);
+Auth::routes(['register'=>false,'verify' => true]);
 
 Route::get('user/login','FrontendController@login')->name('login.form');
+//1.1
+
 Route::post('user/login','FrontendController@loginSubmit')->name('login.submit');
 Route::get('user/logout','FrontendController@logout')->name('user.logout');
 
 Route::get('user/register','FrontendController@register')->name('register.form');
 Route::post('user/register','FrontendController@registerSubmit')->name('register.submit');
+
+Route::get('user/verify','FrontendController@verify_user')->name('verify_user.form');
+
 // Reset password
 Route::get('forget-password', 'Auth\ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
 Route::post('forget-password', 'Auth\ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 

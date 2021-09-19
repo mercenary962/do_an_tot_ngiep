@@ -322,12 +322,30 @@ class FrontendController extends Controller
         return view('frontend.pages.login');
     }
     public function loginSubmit(Request $request){
+        // return  dd(123123123);
+        //1.1
         $data= $request->all();
         //$remember = $request->get('remember');
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
             Session::put('user',$data['email']);
-            request()->session()->flash('success','Đăng nhập thành công');
+           
+            $user = Auth::user();
+
+            
+            if($user->email_verified_at){
+                    //'email_verified_at'=>  
+                 request()->session()->flash('success','Đăng nhập thành công');
+                 return redirect()->route('home');
+                 
+            }
+            else
+               { 
+                request()->session()->flash('success','Yêu cầu xác thực');
+                  return redirect()->route('verify_user.form');
+                }
+            
             return redirect()->route('home');
+            
         }
         else{
             request()->session()->flash('error','Email hoặc Mật khẩu không chính xác, vui lòng thử lại!');
@@ -347,6 +365,9 @@ class FrontendController extends Controller
     public function register(){
         return view('frontend.pages.register');
     }
+    public function verify_user(){
+        return view('frontend.pages.verify_user');
+    }
     public function registerSubmit(Request $request){
         // return $request->all();
         $this->validate($request,[
@@ -357,10 +378,14 @@ class FrontendController extends Controller
         $data=$request->all();
         // dd($data);
         $check=$this->create($data);
+       
         Session::put('user',$data['email']);
+       ///??
         if($check){
-            request()->session()->flash('success','Đăng ký thành công');
-            return redirect()->route('home');
+           
+            return redirect()->route('verify_user.form');
+            // request()->session()->flash('success','Đăng ký thành công');
+            //return redirect()->route('home');
             // Auth::login($data);
         }
         else{
