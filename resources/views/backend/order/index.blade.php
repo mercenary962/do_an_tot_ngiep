@@ -35,8 +35,6 @@
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
                 $users=DB::table('users')->where('id',$order->user_id)->get(); 
             @endphp 
-              {{-- @foreach($order->cart_info as $cart) --}}
-              
                   <tr>
                       <td>{{$order->id}}</td>
                       <td>{{$order->order_number}}</td>
@@ -44,19 +42,7 @@
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
                       @endforeach
-                      
-                        
-                          {{-- @foreach($product as $pro)
-                            @if(count($product)>1){
-                              <tr>
-                                <td>{{$pro->title}}</td>
-                              </tr>
-                            }
-                            @else
-                              <td>{{$pro->title}}</td>
-                            @endif
-                          @endforeach --}}
-                        
+                    
                       
                       <td>{{$order->quantity}}</td>
                       <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
@@ -82,7 +68,6 @@
                           </form>
                       </td>
                   </tr>  
-                {{-- @endforeach --}}
             @endforeach
           </tbody>
         </table>

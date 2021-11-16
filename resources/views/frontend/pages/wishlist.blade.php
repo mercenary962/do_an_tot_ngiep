@@ -71,11 +71,6 @@
 	<!--/ End Shopping Cart -->
 			
 	
-	
-	@include('frontend.layouts.newsletter')
-	
-	
-	
 	<!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">

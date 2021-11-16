@@ -21,8 +21,6 @@
               <th>STT</th>
               <th>Tiêu đề</th>
               <th>Hạng mục</th>
-              <th>Thẻ</th>
-              <th>Tác giả</th>
               <th>Ảnh</th>
               <th>Trạng thái</th>
               <th>Tùy chọn</th>
@@ -31,23 +29,12 @@
           <tbody>
            
             @foreach($posts as $post)   
-              @php 
-              $author_info=DB::table('users')->select('name')->where('id',$post->added_by)->get();
-              // dd($sub_cat_info);
-              // dd($author_info);
-
-              @endphp
+      
                 <tr>
                     <td>{{$post->id}}</td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->cat_info->title}}</td>
-                    <td>{{$post->tags}}</td>
-
-                    <td>
-                      @foreach($author_info as $data)
-                          {{$data->name}}
-                      @endforeach
-                    </td>
+                   
                     <td>
                         @if($post->photo)
                             <img src="{{$post->photo}}" class="img-fluid zoom" style="max-width:80px" alt="{{$post->photo}}">

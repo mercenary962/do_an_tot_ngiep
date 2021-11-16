@@ -26,9 +26,6 @@
 						<div class="col-lg-8 col-12">
 							<div class="form-main">
 								<div class="title">
-									@php
-										$settings=DB::table('settings')->get();
-									@endphp
 									<h3>Gửi thông tin liên hệ</h3>
 								</div>
 								<form class="form-contact form contact_form" method="post" action="{{route('contact.store')}}" id="contactForm" novalidate="novalidate">
@@ -74,21 +71,21 @@
 									<i class="fa fa-phone"></i>
 									<h4 class="title">Số điện thoại:</h4>
 									<ul>
-										<li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
+										<li>0377592469</li>
 									</ul>
 								</div>
 								<div class="single-info">
 									<i class="fa fa-envelope-open"></i>
 									<h4 class="title">Email:</h4>
 									<ul>
-										<li><a href="mailto:info@yourwebsite.com">@foreach($settings as $data) {{$data->email}} @endforeach</a></li>
+										<li><a href="#">daotheanh962@gmail.com</a></li>
 									</ul>
 								</div>
 								<div class="single-info">
 									<i class="fa fa-location-arrow"></i>
 									<h4 class="title">Địa chỉ:</h4>
 									<ul>
-										<li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
+										<li>Số 123, đường Lĩnh Nam, phường Vĩnh Hưng,Hoàng Mai,Hà Nội</li>
 									</ul>
 								</div>
 							</div>
@@ -113,10 +110,6 @@
 	</section>
 	<!--/ End Contact -->
 
-	
-	<!-- Start Shop Newsletter  -->
-	@include('frontend.layouts.newsletter')
-	<!-- End Shop Newsletter -->
 	<!--================Contact Success  =================-->
 	<div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">

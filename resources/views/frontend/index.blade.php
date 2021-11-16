@@ -13,7 +13,7 @@
         <div class="carousel-inner" role="listbox">
                 @foreach($banners as $key=>$banner)
                 <div class="carousel-item {{(($key==0)? 'active' : '')}}">
-                    <img class="d-block w-100" src="{{$banner->photo}}" alt="First slide" style="max-height:550px !important; ">
+                    <img class="d-block w-100" src="{{$banner->photo}}" alt="First slide">
                 </div>  
             @endforeach   
         </div>
@@ -29,7 +29,36 @@
 @endif
 
 
-
+{{-- <div id="Gslider" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#Gslider" data-slide-to="0" class="active"></li>
+        <li data-target="#Gslider" data-slide-to="1"></li>
+        <li data-target="#Gslider" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="https://placeimg.com/1080/500/animals" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>My Caption Title (1st Image)</h5>
+                <p>The whole caption will only show up if the screen is at least medium size.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://placeimg.com/1080/500/arch" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://placeimg.com/1080/500/nature" alt="Third slide">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div> --}}
 
 <!--/ End Slider Area -->
 
@@ -418,40 +447,21 @@
 @push('styles')
     <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=60c809127518e70012abbb27&product=inline-share-buttons" async="async"></script>
     <style>
-        /* Banner Sliding */
-        #Gslider .carousel-inner {
-        background: #000000;
-        color:black;
-        }
 
+        /* Banner Sliding */
+        #Gslider .carousel-item {
+            height: 100%;
+            min-height: 100%;
+        }
         #Gslider .carousel-inner{
-        height: 550px;
+            height: 750px;
         }
         #Gslider .carousel-inner img{
+            height: 100%;
             width: 100% !important;
-            opacity: .8;
         }
 
-        #Gslider .carousel-inner .carousel-caption {
-        bottom: 60%;
-        }
 
-        #Gslider .carousel-inner .carousel-caption h1 {
-        font-size: 50px;
-        font-weight: bold;
-        line-height: 100%;
-        color: #F7941D;
-        }
-
-        #Gslider .carousel-inner .carousel-caption p {
-        font-size: 18px;
-        color: black;
-        margin: 28px 0 28px 0;
-        }
-
-        #Gslider .carousel-indicators {
-        bottom: 70px;
-        }
     </style>
 @endpush
 
@@ -501,7 +511,7 @@
         });
     });
 </script>
-<script>
+{{-- <script>
         function cancelFullScreen(el) {
         var requestMethod = el.cancelFullScreen||el.webkitCancelFullScreen||el.mozCancelFullScreen||el.exitFullscreen;
         if (requestMethod) { // cancel full screen.
@@ -528,6 +538,6 @@
         }
         return false
     }
-</script>
+</script> --}}
 
 @endpush

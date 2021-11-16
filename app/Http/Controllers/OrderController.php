@@ -183,11 +183,16 @@ class OrderController extends Controller
             }
         }
         if($request->status=='cancel'){
-            foreach($order->cart as $cart){
-                $product=$cart->product;
-                // return $product;
-                $product->stock +=$cart->quantity;
-                $product->save();
+            if($order->payment_method=='vnpay'){
+                request()->session()->flash('error','Không thể hủy đơn hàng khi thanh toán qua VNPAY');
+            }
+            else{
+                foreach($order->cart as $cart){
+                    $product=$cart->product;
+                    // return $product;
+                    $product->stock +=$cart->quantity;
+                    $product->save();
+                }
             }
         }
         if(($request->method=='cod') && ($request->status=='delivered')){

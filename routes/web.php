@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes(['register'=>false,'verify' => true]);
+Auth::routes(['register'=>false]);
 
 Route::get('user/login','FrontendController@login')->name('login.form');
 //1.1
@@ -25,7 +25,7 @@ Route::get('user/logout','FrontendController@logout')->name('user.logout');
 Route::get('user/register','FrontendController@register')->name('register.form');
 Route::post('user/register','FrontendController@registerSubmit')->name('register.submit');
 
-Route::get('user/verify','FrontendController@verify_user')->name('verify_user.form');
+Route::get('user/verify/{token}','FrontendController@verifyEmail')->name('user.verify');
 
 // Reset password
 Route::get('forget-password', 'Auth\ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
@@ -66,6 +66,7 @@ Route::get('wishlist-delete/{id}','WishlistController@wishlistDelete')->name('wi
 Route::post('cart/order','OrderController@store')->name('cart.order');
 Route::get('order/pdf/{id}','OrderController@pdf')->name('order.pdf');
 Route::get('/income','OrderController@incomeChart')->name('product.order.income');
+// Route::get('/order-statistics','OrderController@pieChart');
 
 // Payment Online
 Route::post('payment/online','OrderController@createPayment')->name('payment');
@@ -83,10 +84,8 @@ Route::get('/blog-detail/{slug}','FrontendController@blogDetail')->name('blog.de
 Route::get('/blog/search','FrontendController@blogSearch')->name('blog.search');
 Route::post('/blog/filter','FrontendController@blogFilter')->name('blog.filter');
 Route::get('blog-cat/{slug}','FrontendController@blogByCategory')->name('blog.category');
-Route::get('blog-tag/{slug}','FrontendController@blogByTag')->name('blog.tag');
 
-// NewsLetter
-Route::post('/subscribe','FrontendController@subscribe')->name('subscribe');
+
 
 // Product Review
 Route::resource('/review','ProductReviewController');
@@ -127,8 +126,6 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::post('/category/{id}/child','CategoryController@getChildByParent');
     // POST category
     Route::resource('/post-category','PostCategoryController');
-    // Post tag
-    Route::resource('/post-tag','PostTagController');
     // Post
     Route::resource('/post','PostController');
     // Message
@@ -141,9 +138,6 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::resource('/shipping','ShippingController');
     // Coupon
     Route::resource('/coupon','CouponController');
-    // Settings
-    Route::get('settings','AdminController@settings')->name('settings');
-    Route::post('setting/update','AdminController@settingsUpdate')->name('settings.update');
 
     // Notification
     Route::get('/notification/{id}','NotificationController@show')->name('admin.notification');

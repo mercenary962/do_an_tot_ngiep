@@ -33,9 +33,6 @@
                                 </div>
                                 <div class="blog-detail">
                                     <h2 class="blog-title">{{$post->title}}</h2>
-                                    <div class="blog-meta">
-                                        <span class="author"><a href="javascript:void(0);"><i class="fa fa-user"></i>Tác giả {{$post->author_info['name']}}</a><a href="javascript:void(0);"><i class="fa fa-calendar"></i>{{$post->created_at->format('M d, Y')}}</a><a href="javascript:void(0);"><i class="fa fa-comments"></i>Bình luận ({{$post->allComments->count()}})</a></span>
-                                    </div>
                                     <div class="sharethis-inline-reaction-buttons"></div>
                                     <div class="content">
                                         @if($post->quote)
@@ -44,23 +41,7 @@
                                         <p>{!! ($post->description) !!}</p>
                                     </div>
                                 </div>
-                                {{-- <div class="share-social">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="content-tags">
-                                                <h4>Tags:</h4>
-                                                <ul class="tag-inner">
-                                                    @php 
-                                                        $tags=explode(',',$post->tags);
-                                                    @endphp
-                                                    @foreach($tags as $tag)
-                                                    <li><a href="javascript:void(0);">{{$tag}}</a></li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                               
                             </div>
                             @auth
                             <div class="col-12 mt-4">			
@@ -144,53 +125,14 @@
                                     <div class="content">
                                         <h5><a href="#">{{$post->title}}</a></h5>
                                         <ul class="comment">
-                                        @php 
-                                            $author_info=DB::table('users')->select('name')->where('id',$post->added_by)->get();
-                                        @endphp
+                                    
                                             <li><i class="fa fa-calendar" aria-hidden="true"></i>{{$post->created_at->format('d M, y')}}</li>
-                                            <li><i class="fa fa-user" aria-hidden="true"></i> 
-                                                @foreach($author_info as $data)
-                                                    @if($data->name)
-                                                        {{$data->name}}
-                                                    @else
-                                                        Ẩn danh
-                                                    @endif
-                                                @endforeach
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <!-- End Single Post -->
                             @endforeach
                         </div>
-                        <!--/ End Single Widget -->
-                        <!-- Single Widget -->
-                        <!--/ End Single Widget -->
-                        <!-- Single Widget -->
-
-                        {{-- <div class="single-widget side-tags">
-                            <h3 class="title">Thẻ</h3>
-                            <ul class="tag">
-                                @foreach(Helper::postTagList('posts') as $tag)
-                                    <li><a href="">{{$tag->title}}</a></li>
-                                @endforeach
-                            </ul>
-                        </div> --}}
-
-                        <!--/ End Single Widget -->
-                        <!-- Single Widget -->
-                        <div class="single-widget newsletter">
-                            <h3 class="title">Thư</h3>
-                            <div class="letter-inner">
-                                <h4>Đăng ký để cập nhật những thông tin mới nhất</h4>
-                                <form method="POST" action="{{route('subscribe')}}" class="form-inner">
-                                    @csrf
-                                    <input type="email" name="email" placeholder="Email">
-                                    <button type="submit" class="btn " style="width: 100%">Đăng ký</button>
-                                </form>
-                            </div>
-                        </div>
-                        <!--/ End Single Widget -->
                     </div>
                 </div>
             </div>
@@ -198,9 +140,6 @@
     </section>
     <!--/ End Blog Single -->
 @endsection
-@push('styles')
-<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
-@endpush
 @push('scripts')
 <script>
 $(document).ready(function(){

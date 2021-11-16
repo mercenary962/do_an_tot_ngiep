@@ -23,28 +23,32 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+          <tr>
             @php
-                $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
-                $users=DB::table('users')->where('id',$order->user_id)->get(); 
+              $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
+              $users=DB::table('users')->where('id',$order->user_id)->get(); 
             @endphp
+            {{-- @foreach($order->cart_info as $cart)
+            @php 
+              $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
+            @endphp --}}
             <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
             @foreach($users as $user)
                         <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>
+                        <td>{{$user->email}}</td> 
             <td>{{$order->quantity}}</td>
             <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
             <td>{{number_format($order->total_amount)}} đ</td>
             <td>
                 @if($order->status=='new')
-                  <span class="badge badge-primary">{{$order->status}}</span>
-                @elseif($order->status=='proccess')
-                  <span class="badge badge-warning">{{$order->status}}</span>
+                  <span class="badge badge-primary">Đang xử lý</span>
+                @elseif($order->status=='process')
+                  <span class="badge badge-warning">Đang giao hàng</span>
                 @elseif($order->status=='delivered')
-                  <span class="badge badge-success">{{$order->status}}</span>
+                  <span class="badge badge-success">Giao hàng thành công</span>
                 @else
-                  <span class="badge badge-danger">{{$order->status}}</span>
+                  <span class="badge badge-danger">Đã hủy</span>
                 @endif
             </td>
             <td>
@@ -57,6 +61,7 @@
             </td>
           
         </tr>
+        {{-- @endforeach --}}
       </tbody>
     </table>
 
@@ -79,12 +84,35 @@
                         <td> : {{$order->created_at->diffForHumans()}}</td>
                     </tr>
                     <tr>
-                        <td>Số lượng</td>
-                        <td> : {{$order->quantity}}</td>
+                      <td>Tên sản phẩm</td>
+                      <td>:</td>
+                      @foreach($order->cart_info as $cart)
+                          @php 
+                            $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
+                          @endphp
+                          <td>
+                            @foreach($product as $pro)
+                               
+                              <tr>
+                                <td></td>
+                                <td>{{$pro->title}}  -   Số lượng : {{$cart->quantity}}</td>
+                              </tr>
+                            @endforeach
+                          </td>
+                        
+                      @endforeach
                     </tr>
                     <tr>
                         <td>Trạng thái đơn hàng</td>
-                        <td> : {{$order->status}}</td>
+                        @if($order->status=='new')
+                          <td> : Đang xử lý</td>
+                        @elseif($order->status=='process')
+                          <td> : Đang giao hàng</td>
+                        @elseif($order->status=='delivered')
+                          <td> : Giao hàng thành công</td>
+                        @else
+                          <td> : Đã hủy</td>
+                        @endif</td>
                     </tr>
                     <tr>
                         <td>Phí vận chuyển</td>
@@ -95,12 +123,22 @@
                         <td> : {{number_format($order->total_amount)}} đ</td>
                     </tr>
                     <tr>
-                      <td>Phương thức thanh toán</td>
-                      <td> : {{$order->payment_method}}</td>
+                        <td>Phương thức thanh toán</td>
+                        @if($order->payment_method =='cod')
+                          <td> : Thanh toán khi nhận hàng</td>
+                        @else
+                          <td> : Thanh toán qua VNPAY</td>
+                        @endif</td>
+                        {{-- <td> : {{$order->payment_method}}</td> --}}
                     </tr>
                     <tr>
                         <td>Trạng thái thanh toán</td>
-                        <td> : {{$order->payment_status}}</td>
+                        @if($order->payment_status =='paid')
+                          <td> : Đã thanh toán</td>
+                        @else
+                          <td> : Chưa thanh toán</td>
+                        @endif</td>
+                        {{-- <td> : {{$order->payment_status}}</td> --}}
                     </tr>
               </table>
             </div>
@@ -110,26 +148,26 @@
             <div class="shipping-info">
               <h4 class="text-center pb-4">THÔNG TIN VẬN CHUYỂN</h4>
               <table class="table">
-                <tr class="">
-                  <td>Họ và tên</td>
-                  <td> : {{$user->name}}</td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td> : {{$user->email}}</td>
-                </tr>
-                <tr>
-                    <td>Số điện thoại</td>
-                    <td> : {{$user->phone}}</td>
-                </tr>
-                <tr>
-                    <td>Địa chỉ</td>
-                    <td> : {{$user->address}}</td>
-                </tr>
-                <tr>
-                    <td>Ghi chú</td>
-                    <td> : {{$order->notes}}</td>
-                </tr>
+                    <tr class="">
+                        <td>Họ và tên</td>
+                        <td> : {{$user->name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td> : {{$user->email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại</td>
+                        <td> : {{$user->phone}}</td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ</td>
+                        <td> : {{$user->address}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ghi chú</td>
+                        <td> : {{$order->notes}}</td>
+                    </tr>
               </table>
             </div>
           </div>

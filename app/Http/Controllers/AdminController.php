@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Settings;
 use App\User;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Spatie\Activitylog\Models\Activity;
+
 class AdminController extends Controller
 {
     public function index(){
@@ -45,36 +44,6 @@ class AdminController extends Controller
             request()->session()->flash('error','Vui lòng thử lại!');
         }
         return redirect()->back();
-    }
-
-    public function settings(){
-        $data=Settings::first();
-        return view('backend.setting')->with('data',$data);
-    }
-
-    public function settingsUpdate(Request $request){
-        // return $request->all();
-        $this->validate($request,[
-            'short_des'=>'required|string',
-            'description'=>'required|string',
-            'photo'=>'required',
-            'logo'=>'required',
-            'address'=>'required|string',
-            'email'=>'required|email',
-            'phone'=>'required|string',
-        ]);
-        $data=$request->all();
-        // return $data;
-        $settings=Settings::first();
-        // return $settings;
-        $status=$settings->fill($data)->save();
-        if($status){
-            request()->session()->flash('success','Cập nhật Cài đặt thành công');
-        }
-        else{
-            request()->session()->flash('error','Vui lòng thử lại');
-        }
-        return redirect()->route('admin');
     }
 
     public function changePassword(){

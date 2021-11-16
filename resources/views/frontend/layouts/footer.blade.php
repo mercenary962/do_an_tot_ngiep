@@ -11,11 +11,7 @@
 							<div class="logo">
 								<img src="{{asset('backend/img/logo.gif')}}" alt="#">
 							</div>
-							@php
-								$settings=DB::table('settings')->get();
-							@endphp
-							<p class="text">@foreach($settings as $data) {{$data->summary}} @endforeach</p>
-							<p class="call">Xin vui lòng liên hệ để được giải đáp thắc mắc:<span><a href="tel:0377592469">@foreach($settings as $data) {{$data->phone}} @endforeach</a></span></p>
+							<p class="call">Xin vui lòng liên hệ để được giải đáp thắc mắc:<span><a href="tel:0377592469">0377592469</a></span></p>
 						</div>
 						<!-- End Single Widget -->
 					</div>
@@ -54,9 +50,9 @@
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
-									<li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
-									<li>@foreach($settings as $data) {{$data->email}} @endforeach</li>
-									<li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
+									<li>Số 123, đường Lĩnh Nam, phường Vĩnh Hưng,Hoàng Mai,Hà Nội</li>
+									<li>daotheanh962@gmail.com</li>
+									<li>0377592469</li>
 								</ul>
 							</div>
 							<!-- End Single Widget -->

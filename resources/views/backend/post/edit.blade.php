@@ -16,13 +16,6 @@
           @enderror
         </div>
 
-        {{-- <div class="form-group">
-          <label for="quote" class="col-form-label">Quote</label>
-          <textarea class="form-control" id="quote" name="quote">{{$post->quote}}</textarea>
-          @error('quote')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div> --}}
 
         <div class="form-group">
           <label for="summary" class="col-form-label">Tóm tắt <span class="text-danger">*</span></label>
@@ -49,30 +42,7 @@
               @endforeach
           </select>
         </div>
-        {{-- {{$post->tags}} --}}
-        @php 
-                $post_tags=explode(',',$post->tags);
-                // dd($tags);
-              @endphp
-        <div class="form-group">
-          <label for="tags">Thẻ</label>
-          <select name="tags[]" multiple  data-live-search="true" class="form-control selectpicker">
-              <option value="">--Chọn thẻ--</option>
-              @foreach($tags as $key=>$data)
-              
-              <option value="{{$data->title}}"  {{(( in_array( "$data->title",$post_tags ) ) ? 'selected' : '')}}>{{$data->title}}</option>
-              @endforeach
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="added_by">Tác giả</label>
-          <select name="added_by" class="form-control">
-              <option value="">--Chọn tác giả--</option>
-              @foreach($users as $key=>$data)
-                <option value='{{$data->id}}' {{(($post->added_by==$data->id)? 'selected' : '')}}>{{$data->name}}</option>
-              @endforeach
-          </select>
-        </div>
+        
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Ảnh <span class="text-danger">*</span></label>
           <div class="input-group">

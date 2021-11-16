@@ -33,20 +33,8 @@
                                 <div class="shop-single-blog">
                                 <img src="{{$post->photo}}" alt="{{$post->photo}}">
                                     <div class="content">
-                                        @php 
-                                            $author_info=DB::table('users')->select('name')->where('id',$post->added_by)->get();
-                                        @endphp
                                         <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{$post->created_at->format('d M, Y. D')}}
-                                            <span class="float-right">
-                                                <i class="fa fa-user" aria-hidden="true"></i> 
-                                                @foreach($author_info as $data)
-                                                    @if($data->name)
-                                                        {{$data->name}}
-                                                    @else
-                                                        Ẩn danh
-                                                    @endif
-                                                @endforeach
-                                            </span>
+                                        
                                         </p>
                                         <a href="{{route('blog.detail',$post->slug)}}" class="title">{{$post->title}}</a>
                                         <p>{!! html_entity_decode($post->summary) !!}</p>
@@ -56,11 +44,6 @@
                                 <!-- End Single Blog  -->
                             </div>
                         @endforeach
-                        <div class="col-12">
-                            <!-- Pagination -->
-                            {{-- {{$posts->appends($_GET)->links()}} --}}
-                            <!--/ End Pagination -->
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
@@ -107,41 +90,15 @@
                                     <div class="content">
                                         <h5><a href="#">{{$post->title}}</a></h5>
                                         <ul class="comment">
-                                        @php 
-                                            $author_info=DB::table('users')->select('name')->where('id',$post->added_by)->get();
-                                        @endphp
+                                        
                                             <li><i class="fa fa-calendar" aria-hidden="true"></i>{{$post->created_at->format('d M, y')}}</li>
-                                            <li><i class="fa fa-user" aria-hidden="true"></i> 
-                                                @foreach($author_info as $data)
-                                                    @if($data->name)
-                                                        {{$data->name}}
-                                                    @else
-                                                        Vô danh
-                                                    @endif
-                                                @endforeach
-                                            </li>
+                            
                                         </ul>
                                     </div>
                                 </div>
                                 <!-- End Single Post -->
                             @endforeach
                         </div>
-                        <!--/ End Single Widget -->
-                     
-                        <!--/ End Single Widget -->
-                        <!-- Single Widget -->
-                        <div class="single-widget newsletter">
-                            <h3 class="title">Thư</h3>
-                            <div class="letter-inner">
-                                <h4>Đăng ký để cập nhật những thông tin mới nhất</h4>
-                                <form method="POST" action="{{route('subscribe')}}" class="form-inner">
-                                    @csrf
-                                    <input type="email" name="email" placeholder="Email">
-                                    <button type="submit" class="btn " style="width: 100%">Đăng ký</button>
-                                </form>
-                            </div>
-                        </div>
-                        <!--/ End Single Widget -->
                     </div>
                 </div>
             </div>

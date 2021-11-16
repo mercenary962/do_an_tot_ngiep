@@ -9,10 +9,12 @@ use App\Models\PostCategory;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Brand;
+use App\Mail\VerifyEmail;
 use App\User;
+use App\VerifyUser;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Newsletter;
-use DB;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -35,7 +37,6 @@ class FrontendController extends Controller
         $category=Category::where('status','active')->orderBy('title','ASC')->get();
         // return $category;
         return view('frontend.index')
-                // ->with('featured',$featured)
                 ->with('posts',$posts)
                 ->with('banners',$banners)
                 ->with('product_lists',$products)
@@ -232,14 +233,6 @@ class FrontendController extends Controller
             $post->whereIn('post_cat_id',$cat_ids);
             // return $post;
         }
-        if(!empty($_GET['tag'])){
-            $slug=explode(',',$_GET['tag']);
-            // dd($slug);
-            $tag_ids=PostTag::select('id')->whereIn('slug',$slug)->pluck('id')->toArray();
-            // return $tag_ids;
-            $post->where('post_tag_id',$tag_ids);
-            // return $post;
-        }
 
         if(!empty($_GET['show'])){
             $post=$post->where('status','active')->orderBy('id','DESC')->paginate($_GET['show']);
@@ -263,7 +256,6 @@ class FrontendController extends Controller
         // return $request->all();
         $rcnt_post=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
         $posts=Post::orwhere('title','like','%'.$request->search.'%')
-            ->orwhere('quote','like','%'.$request->search.'%')
             ->orwhere('summary','like','%'.$request->search.'%')
             ->orwhere('description','like','%'.$request->search.'%')
             ->orwhere('slug','like','%'.$request->search.'%')
@@ -287,20 +279,8 @@ class FrontendController extends Controller
             }
         }
 
-        $tagURL="";
-        if(!empty($data['tag'])){
-            foreach($data['tag'] as $tag){
-                if(empty($tagURL)){
-                    $tagURL .='&tag='.$tag;
-                }
-                else{
-                    $tagURL .=','.$tag;
-                }
-            }
-        }
-        // return $tagURL;
-            // return $catURL;
-        return redirect()->route('blog',$catURL.$tagURL);
+        
+        return redirect()->route('blog',$catURL);
     }
 
     public function blogByCategory(Request $request){
@@ -309,48 +289,34 @@ class FrontendController extends Controller
         return view('frontend.pages.blog')->with('posts',$post->post)->with('recent_posts',$rcnt_post);
     }
 
-    public function blogByTag(Request $request){
-        // dd($request->slug);
-        $post=Post::getBlogByTag($request->slug);
-        // return $post;
-        $rcnt_post=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        return view('frontend.pages.blog')->with('posts',$post)->with('recent_posts',$rcnt_post);
-    }
 
-    // Login
+
     public function login(){
         return view('frontend.pages.login');
     }
+
     public function loginSubmit(Request $request){
-        // return  dd(123123123);
-        //1.1
-        $data= $request->all();
-        //$remember = $request->get('remember');
+        $data = $request->all();
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
             Session::put('user',$data['email']);
-           
             $user = Auth::user();
-
-            
-            if($user->email_verified_at){
-                    //'email_verified_at'=>  
-                 request()->session()->flash('success','Đăng nhập thành công');
-                 return redirect()->route('home');
-                 
+            if (Auth::user()->email_verified_at == null) {
+                Auth::logout();
+                VerifyUser::create([
+                    'token' => Str::random(60),
+                    'user_id' =>$user->id,
+                ]);
+                request()->session()->flash('success', 'Vui lòng xác thực địa chỉ E-mail của bạn');
+                Mail::to($user->email)->send(new VerifyEmail($user));
+                return redirect()->route('login.form');
             }
-            else
-               { 
-                request()->session()->flash('success','Yêu cầu xác thực');
-                  return redirect()->route('verify_user.form');
-                }
-            
-            return redirect()->route('home');
-            
+            return redirect()->route('home')->with('success', 'Đăng nhập thành công');
         }
         else{
             request()->session()->flash('error','Email hoặc Mật khẩu không chính xác, vui lòng thử lại!');
             return redirect()->back();
         }
+
     }
 
 
@@ -365,9 +331,7 @@ class FrontendController extends Controller
     public function register(){
         return view('frontend.pages.register');
     }
-    public function verify_user(){
-        return view('frontend.pages.verify_user');
-    }
+
     public function registerSubmit(Request $request){
         // return $request->all();
         $this->validate($request,[
@@ -378,21 +342,41 @@ class FrontendController extends Controller
         $data=$request->all();
         // dd($data);
         $check=$this->create($data);
-       
         Session::put('user',$data['email']);
-       ///??
+
+        VerifyUser::create([
+            'token' => Str::random(60),
+            'user_id' =>$check->id,
+        ]);
         if($check){
-           
-            return redirect()->route('verify_user.form');
-            // request()->session()->flash('success','Đăng ký thành công');
-            //return redirect()->route('home');
-            // Auth::login($data);
+            Mail::to($check->email)->send(new VerifyEmail($check));
+            request()->session()->flash('success','Mã xác thực đã được gửi tới E-mail của bạn. Vui lòng kiểm tra E-mail và xác thực');
+            return redirect()->route('login.form');
         }
         else{
-            request()->session()->flash('error','Vui lòng thử lại!!!');
+            request()->session()->flash('error','Vui lòng thử lại!');
             return back();
         }
     }
+
+
+    public function verifyEmail($token)
+    {
+        $verifiedUser = VerifyUser::where('token', $token)->first();
+        if (isset($verifiedUser)) {
+            $user = $verifiedUser->user;
+            if (!$user->email_verified_at) {
+                $user->email_verified_at = Carbon::now();
+                $user->save();
+                return redirect()->route('login.form')->with('success', 'Địa chỉ E-Mmail của bạn đã được xác thực');
+            } else {
+                return redirect()->back()->with('info', 'Địa chỉ E-Mmail của bạn đã xác thực');
+            }
+        } else {
+            return redirect()->route('login.form')->with('error', 'Something went wrong!!');
+        }
+    }
+
     public function create(array $data){
         return User::create([
             'name'=>$data['name'],
@@ -402,23 +386,14 @@ class FrontendController extends Controller
             'phone'=>$data['phone'],
             'address'=>$data['address']
             ]);
-    }
-    public function subscribe(Request $request){
-        if(! Newsletter::isSubscribed($request->email)){
-                Newsletter::subscribePending($request->email);
-                if(Newsletter::lastActionSucceeded()){
-                    request()->session()->flash('success','Đăng ký thành công, Vui lòng kiểm tra Email');
-                    return redirect()->route('home');
-                }
-                else{
-                    Newsletter::getLastError();
-                    return back()->with('error','Lỗi, Vui lòng thử lại');
-                }
-            }
-            else{
-                request()->session()->flash('error','Bạn đã đăng ký');
-                return back();
-            }
+
+        // VerifyUser::create([
+        //     'token' => Str::random(60),
+        //     'user_id' => $user->id,
+        // ]);
+
+        // Mail::to($user->email)->send(new VerifyEmail($user));
+        // return redirect()->route('login.form')->with('success', 'Mã xác thực đã được gửi tới E-mail của bạn. Vui lòng kiểm tra E-mail và xác thực');
     }
     
 }

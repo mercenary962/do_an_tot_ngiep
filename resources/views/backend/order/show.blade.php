@@ -23,29 +23,20 @@
         </tr>
       </thead>
       <tbody>
-        
-          {{-- @foreach($order->cart_info as $cart)
-          @php 
-            $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
-          @endphp --}}
           <tr>
             @php
               $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
               $users=DB::table('users')->where('id',$order->user_id)->get(); 
             @endphp
+            {{-- @foreach($order->cart_info as $cart)
+            @php 
+              $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
+            @endphp --}}
             <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
             @foreach($users as $user)
                         <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>
-           
-           
-                {{-- <td>
-                  @foreach($product as $pro)
-                    {{$pro->title}}
-                  @endforeach
-                </td> --}}
-            
+                        <td>{{$user->email}}</td> 
             <td>{{$order->quantity}}</td>
             <td>@foreach($shipping_charge as $data) {{number_format($data)}} đ @endforeach</td>
             <td>{{number_format($order->total_amount)}} đ</td>
@@ -92,22 +83,24 @@
                         <td>Ngày đặt</td>
                         <td> : {{$order->created_at->diffForHumans()}}</td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                       <td>Tên sản phẩm</td>
+                      <td>:</td>
                       @foreach($order->cart_info as $cart)
                           @php 
                             $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
                           @endphp
                           <td>
                             @foreach($product as $pro)
-                              : {{$pro->title}}
+                               
+                              <tr>
+                                <td></td>
+                                <td>{{$pro->title}}  -   Số lượng : {{$cart->quantity}}</td>
+                              </tr>
                             @endforeach
                           </td>
+                        
                       @endforeach
-                    </tr> --}}
-                    <tr>
-                        <td>Số lượng</td>
-                        <td> : {{$order->quantity}}</td>
                     </tr>
                     <tr>
                         <td>Trạng thái đơn hàng</td>
@@ -131,11 +124,21 @@
                     </tr>
                     <tr>
                         <td>Phương thức thanh toán</td>
-                        <td> : {{$order->payment_method}}</td>
+                        @if($order->payment_method =='cod')
+                          <td> : Thanh toán khi nhận hàng</td>
+                        @else
+                          <td> : Thanh toán qua VNPAY</td>
+                        @endif</td>
+                        {{-- <td> : {{$order->payment_method}}</td> --}}
                     </tr>
                     <tr>
                         <td>Trạng thái thanh toán</td>
-                        <td> : {{$order->payment_status}}</td>
+                        @if($order->payment_status =='paid')
+                          <td> : Đã thanh toán</td>
+                        @else
+                          <td> : Chưa thanh toán</td>
+                        @endif</td>
+                        {{-- <td> : {{$order->payment_status}}</td> --}}
                     </tr>
               </table>
             </div>

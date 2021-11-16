@@ -113,6 +113,7 @@ class CartController extends Controller
 
     public function cartUpdate(Request $request){
         // dd($request->all());
+
         if($request->quant){
             $error = array();
             $success = '';

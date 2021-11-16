@@ -121,8 +121,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Tùy chọn:</h6>
           <a class="collapse-item" href="{{route('statistics.revenue')}}">Thống kê doanh thu</a>
-          <a class="collapse-item" href="{{route('statistics.order')}}">Thống kê sản phẩm</a>
-          {{-- <a class="collapse-item" href="{{route('brand.create')}}">Thêm Nhãn hiệu</a> --}}
+          <a class="collapse-item" href="{{route('statistics.order')}}">Thống kê đơn hàng</a>
         </div>
       </div>
   </li>
@@ -166,21 +165,6 @@
       </div>
     </li>
 
-    <!-- Tags -->
-  <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="true" aria-controls="tagCollapse">
-          <i class="fas fa-tags fa-folder"></i>
-          <span>Thẻ</span>
-      </a>
-      <div id="tagCollapse" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Tùy chọn:</h6>
-          <a class="collapse-item" href="{{route('post-tag.index')}}">Thẻ</a>
-          <a class="collapse-item" href="{{route('post-tag.create')}}">Thêm thẻ</a>
-          </div>
-      </div>
-  </li>
-
     <!-- Comments -->
     <li class="nav-item">
       <a class="nav-link" href="{{route('comment.index')}}">
@@ -206,12 +190,6 @@
       <a class="nav-link" href="{{route('users.index')}}">
           <i class="fas fa-users"></i>
           <span>Người dùng</span></a>
-  </li>
-   <!-- General settings -->
-   <li class="nav-item">
-      <a class="nav-link" href="{{route('settings')}}">
-          <i class="fas fa-cog"></i>
-          <span>Cài đặt</span></a>
   </li>
 
   <!-- Sidebar Toggler (Sidebar) -->

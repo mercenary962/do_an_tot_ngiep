@@ -43,24 +43,7 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="tags">Thẻ</label>
-          <select name="tags[]" multiple  data-live-search="true" class="form-control selectpicker">
-              <option value="">--Chọn thẻ--</option>
-              @foreach($tags as $key=>$data)
-                  <option value='{{$data->title}}'>{{$data->title}}</option>
-              @endforeach
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="added_by">Tác giả</label>
-          <select name="added_by" class="form-control">
-              <option value="">--Chọn tác giả--</option>
-              @foreach($users as $key=>$data)
-                <option value='{{$data->id}}' {{($key==0) ? 'selected' : ''}}>{{$data->name}}</option>
-            @endforeach
-          </select>
-        </div>
+       
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Ảnh <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -125,14 +108,6 @@
       });
     });
 
-    // $(document).ready(function() {
-    //   $('#quote').summernote({
-    //     placeholder: "Write detail Quote.....",
-    //       tabsize: 2,
-    //       height: 100
-    //   });
-    // });
-    // $('select').selectpicker();
 
 </script>
 @endpush

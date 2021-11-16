@@ -77,5 +77,175 @@
 	    </div>
 	  </div>
 
+	  <div class="row">
 
-@stop
+		<!-- Bar Chart -->
+		<div class="col-xl-8 col-lg-7">
+			<div class="card shadow mb-4">
+			  <!-- Card Header - Dropdown -->
+			  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+				<h6 class="m-0 font-weight-bold text-primary">Doanh số bán hàng</h6>
+				
+			  </div>
+			  <!-- Card Body -->
+			  <div class="card-body">
+				<div class="chart-area">
+				  <canvas id="myBarChart"></canvas>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+		<!-- Pie Chart -->
+			<div class="col-xl-4 col-lg-5">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">Biểu đồ thống kê đơn hàng</h6>
+					</div>
+					<div class="card-body" style="overflow:hidden">
+							<div id="pie_chart" style="width:600px; height:500px;">
+					</div>
+				</div>
+			</div>
+		
+
+		
+	</div>
+
+		
+
+
+@endsection
+
+@push('scripts')
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<!-- Pie Chart -->
+    <script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+
+			var data = google.visualization.arrayToDataTable([
+				['Status', 'Quantity'],
+
+                @php
+                foreach($pieChart as $val) {
+                    echo "['".$val->status."', ".$val->status_qty."],";
+                }
+                @endphp
+			]);
+
+			var options = {
+			title: ''
+			};
+
+			var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+
+			chart.draw(data, options);
+		}
+    </script>
+
+	<!-- Bar Chart -->
+	<script type="text/javascript">
+		// Set new default font family and font color to mimic Bootstrap's default styling
+		Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+		Chart.defaults.global.defaultFontColor = '#000000';
+
+
+		// Bar Chart Example
+	
+		var cData = JSON.parse(`<?php echo $chart_data; ?>`);
+		var ctx = document.getElementById("myBarChart");
+		var myBarChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: cData.label,
+				datasets: [{
+					label: "Quantity",
+					backgroundColor: "#4e73df",
+					hoverBackgroundColor: "#2e59d9",
+					borderColor: "#4e73df",
+					data: cData.data,
+					
+				}],
+			},
+			options: {
+				maintainAspectRatio: false,
+				layout: {
+					padding: {
+						left: 5,
+						right: 5,
+						top: 25,
+						bottom: 0
+					}
+				},
+				scales: {
+					xAxes: [{
+						time: {
+							unit: 'status'
+						},
+						gridLines: {
+							display: false,
+							drawBorder: false
+						},
+						ticks: {
+							maxTicksLimit: 6
+						},
+						maxBarThickness: 50,
+						// barPercentage: 20.0,
+    					// categoryPercentage: 20.0
+						
+	
+					}],
+					yAxes: [{
+						ticks: {
+							min: 0,
+							max: 10,
+							maxTicksLimit: 10,
+							padding: 10,
+						// Include a dollar sign in the ticks
+						callback: function(value, index, values) {
+							return value;
+						}
+					},
+					gridLines: {
+						color: "rgb(234, 236, 244)",
+						zeroLineColor: "rgb(234, 236, 244)",
+						drawBorder: false,
+						borderDash: [2],
+						zeroLineBorderDash: [2]
+					}
+					}],
+				},
+				legend: {
+					display: false
+				},
+				tooltips: {
+					titleMarginBottom: 10,
+					titleFontColor: '#6e707e',
+					titleFontSize: 18,
+					backgroundColor: "rgb(255,255,255)",
+					bodyFontColor: "#858796",
+					borderColor: '#dddfeb',
+					borderWidth: 1,
+					xPadding: 15,
+					yPadding: 15,
+					displayColors: false,
+					caretPadding: 20,
+					callbacks: {
+						label: function(tooltipItem, chart) {
+						var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+						return datasetLabel + ': ' + tooltipItem.yLabel;
+						}
+					}
+				},
+			}
+		});
+
+	</script>
+
+	
+@endpush

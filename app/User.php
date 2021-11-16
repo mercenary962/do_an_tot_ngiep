@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -19,6 +19,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'name', 'email', 'password','address','phone','role','photo','status',
     ];
 
+    public function verifyUser()
+    {
+        return $this->hasOne('App\VerifyUser');
+    }
+    
     /**
      * The attributes that should be hidden for arrays.
      *
