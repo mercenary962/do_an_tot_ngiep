@@ -130,10 +130,10 @@
                                     <h2>Phương thức thanh toán</h2>
                                     <div class="content">
                                         <div class="checkbox">
-                                            {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
                                             <form-group>
                                                 <input name="payment_method"  type="radio" value="cod"> <label>Thanh toán khi nhận hàng</label><br>
-                                                <input name="payment_method"  type="radio" value="vnpay"> <label>Thanh toán online bằng VNPAY</label> 
+                                                <input name="payment_method"  type="radio" value="vnpay"> <label>Thanh toán online bằng VNPAY</label>
+                                                <p>(Miễn phí vận chuyển)</p>
                                             </form-group>
                                             
                                         </div>

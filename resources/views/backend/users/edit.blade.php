@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label for="inputEmail" class="col-form-label">Email</label>
-          <input id="inputEmail" type="email" name="email" placeholder="Nhập Email..."  value="{{$user->email}}" class="form-control">
+          <input id="inputEmail" type="email" name="email" placeholder="Nhập Email..."  value="{{$user->email}}" class="form-control" readonly>
           @error('email')
           <span class="text-danger">{{$message}}</span>
           @enderror
@@ -52,6 +52,7 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
           </div>
+
 
           <div class="form-group">
             <label for="status" class="col-form-label">Trạng thái</label>

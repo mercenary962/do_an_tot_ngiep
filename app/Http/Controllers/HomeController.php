@@ -74,10 +74,10 @@ class HomeController extends Controller
            else{
                 $status=$order->delete();
                 if($status){
-                    request()->session()->flash('success','Xóa đơn hàng thành công');
+                    request()->session()->flash('success','Hủy đơn hàng thành công');
                 }
                 else{
-                    request()->session()->flash('error','Đơn hàng không thể bị xóa');
+                    request()->session()->flash('error','Đơn hàng không thể bị hủy');
                 }
                 return redirect()->route('user.order.index');
            }
@@ -87,6 +87,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
+
 
     public function orderShow($id)
     {

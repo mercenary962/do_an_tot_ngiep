@@ -15,14 +15,6 @@ class ShippingSeeder extends Seeder
     {
         $data=array(
             array(
-                'type'=>'VNPost – EMS (Bưu điện Việt Nam)',
-                'price'=>'62000',
-                'status'=>'active',
-                'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-                'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-
-            ),
-            array(
                 'type'=>'Viettel Post',
                 'price'=>'54000',
                 'status'=>'active',

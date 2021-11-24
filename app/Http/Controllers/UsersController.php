@@ -100,20 +100,7 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user=User::findOrFail($id);
-        $this->validate($request,
-        [
-            'name'=>'string|required|max:30',
-            'email'=>'string|required|unique:users',
-            'password'=>'string|required',
-            'address'=>'string|required',
-            'role'=>'required|in:admin,user',
-            'status'=>'required|in:active,inactive',
-            'photo'=>'nullable|string',
-        ]);
-        // dd($request->all());
         $data=$request->all();
-        // dd($data);
-        
         $status=$user->fill($data)->save();
         if($status){
             request()->session()->flash('success','Cập nhật thành công');

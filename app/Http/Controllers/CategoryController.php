@@ -27,7 +27,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        // $parent_cats=Category::where('is_parent',1)->orderBy('title','ASC')->get();
         return view('backend.category.create');
     }
 
@@ -42,11 +41,9 @@ class CategoryController extends Controller
         // return $request->all();
         $this->validate($request,[
             'title'=>'string|required',
-            // 'summary'=>'string|nullable',
             'photo'=>'string|nullable',
             'status'=>'required|in:active,inactive',
-            // 'is_parent'=>'sometimes|in:1',
-            // 'parent_id'=>'nullable|exists:categories,id',
+
         ]);
         $data= $request->all();
         $slug=Str::slug($request->title);
@@ -106,15 +103,10 @@ class CategoryController extends Controller
         $category=Category::findOrFail($id);
         $this->validate($request,[
             'title'=>'string|required',
-            // 'summary'=>'string|nullable',
             'photo'=>'string|nullable',
             'status'=>'required|in:active,inactive',
-            // 'is_parent'=>'sometimes|in:1',
-            // 'parent_id'=>'nullable|exists:categories,id',
         ]);
         $data= $request->all();
-        // $data['is_parent']=$request->input('is_parent',0);
-        // return $data;
         $status=$category->fill($data)->save();
         if($status){
             request()->session()->flash('success','Cập nhật hạng mục thành công');
@@ -134,14 +126,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category=Category::findOrFail($id);
-        // $child_cat_id=Category::where('parent_id',$id)->pluck('id');
-        // return $child_cat_id;
         $status=$category->delete();
         
         if($status){
-            // if(count($child_cat_id)>0){
-            //     Category::shiftChild($child_cat_id);
-            // }
             request()->session()->flash('success','Hạng mục đã bị xóa');
         }
         else{
@@ -150,16 +137,4 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    // public function getChildByParent(Request $request){
-    //     // return $request->all();
-    //     $category=Category::findOrFail($request->id);
-    //     $child_cat=Category::getChildByParentID($request->id);
-    //     // return $child_cat;
-    //     if(count($child_cat)<=0){
-    //         return response()->json(['status'=>false,'msg'=>'','data'=>null]);
-    //     }
-    //     else{
-    //         return response()->json(['status'=>true,'msg'=>'','data'=>$child_cat]);
-    //     }
-    // }
 }

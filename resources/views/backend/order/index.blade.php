@@ -21,7 +21,6 @@
               <th>Mã đơn hàng</th>
               <th>Họ tên</th>
               <th>Email</th>
-              {{-- <th>Tên sản phẩm</th> --}}
               <th>Số lượng</th>
               <th>Phí vận chuyển</th>
               <th>Tổng tiền</th>

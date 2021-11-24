@@ -39,6 +39,8 @@ Route::get('/','FrontendController@home')->name('home');
 // Frontend Routes
 Route::get('/home', 'FrontendController@index');
 Route::get('/about-us','FrontendController@aboutUs')->name('about-us');
+Route::get('/return-policy','FrontendController@returnPolicy')->name('return-policy');
+Route::get('/warranty-product','FrontendController@warrantyProduct')->name('warranty-product');
 Route::get('/contact','FrontendController@contact')->name('contact');
 Route::post('/contact/message','MessageController@store')->name('contact.store');
 Route::get('product-detail/{slug}','FrontendController@productDetail')->name('product-detail');
@@ -122,8 +124,6 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::resource('/category','CategoryController');
     // Product
     Route::resource('/product','ProductController');
-    // Ajax for sub category
-    Route::post('/category/{id}/child','CategoryController@getChildByParent');
     // POST category
     Route::resource('/post-category','PostCategoryController');
     // Post

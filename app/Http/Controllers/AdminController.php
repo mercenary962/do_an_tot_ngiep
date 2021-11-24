@@ -46,6 +46,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
     public function changePassword(){
         return view('backend.layouts.changePassword');
     }

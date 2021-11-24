@@ -1,6 +1,6 @@
 @extends('user.layouts.master')
 
-@@section('title','Chi tiết đặt hàng')
+@section('title','Chi tiết đặt hàng')
 
 @section('main-content')
 <div class="card">

@@ -36,9 +36,4 @@ class Order extends Model
     public function product(){
         return $this->belongsTo(Product::class,'product_id');
     }
-
-    // public static function getAllProductFromCart(){
-    //     return Cart::with('product')->where('user_id',auth()->user()->id)->get();
-    // }
-
 }

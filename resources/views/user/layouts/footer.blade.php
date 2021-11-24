@@ -3,7 +3,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Bản quyền thuộc về &copy; <a href="https://github.com/mercenary962" target="_blank">HennryJones</a> 2021</span>
+            <span>&copy; <a href="https://github.com/mercenary962" target="_blank">HennryJones</a> 2021</span>
           </div>
         </div>
       </footer>

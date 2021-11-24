@@ -67,12 +67,6 @@
                 <div class="col-lg-8 col-md-7 col-12">
                     <div class="search-bar-top">
                         <div class="search-bar">
-                            <select>
-                                <option >Tất cả</option>
-                                @foreach(Helper::getAllCategory() as $cat)
-                                    <option>{{$cat->title}}</option>
-                                @endforeach
-                            </select>
                             <form method="POST" action="{{route('product.search')}}">
                                 @csrf
                                 <input name="search" placeholder="Tìm kiếm sản phẩm" type="search">
@@ -187,9 +181,19 @@
                                             <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">Giới thiệu</a></li>
                                             <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Sản phẩm</a><span class="new">New</span></li>												
                                                 
-                                            <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a href="{{route('blog')}}">Tin tức</a></li>									
+                                            <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a href="{{route('blog')}}">Tin tức</a></li>
+                                            
+                                            <li>
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Chính Sách
+                                                <span class="caret"></span></a>
+                                                <ul class="dropdown border-0 shadow">
+                                                  <li><a href="{{route('warranty-product')}}">Chính Sách Bảo Hành</a></li>
+                                                  <li><a href="{{route('return-policy')}}">Chính Sách Đổi Trả</a></li>
+                                                </ul>
+                                            </li>
                                             
                                             <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Liên hệ</a></li>
+
                                         </ul>
                                     </div>
                                 </div>

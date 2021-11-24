@@ -2,80 +2,71 @@
 
 @section('main-content')
 
-	<div class="row clearfix page_header">
-		<div class="col-md-4">
-			<h2> Thống kê đơn hàng </h2>		
-		</div>
-		<div class="col-md-8 text-right">
-			{!! Form::open([ 'route' => ['statistics.order'], 'method' => 'get' ]) !!}
-				<div class="form-row align-items-center">
-					
-				</div>
-			{!! Form::close() !!}
+<div class="card shadow mb-4">
+	<div class="row">
+		<div class="col-md-12">
+		   @include('backend.layouts.notification')
 		</div>
 	</div>
+   <div class="card-header py-3">
+	 <h6 class="m-0 font-weight-bold text-primary float-left">Thống kê đơn hàng</h6>
+   </div>
+   <div class="card-body">
+	<div class="table-responsive">
+	  <table class="table table-striped table-borderless table-sm" cellspacing="0">
+		<thead>
+		  <tr>
+			<th>Mã đơn hàng</th>
+			<th class="text-right d-none d-sm-table-cell">Số lượng</th>
+			<th class="text-right d-none d-sm-table-cell">Thành tiền</th>
+			<th class="text-right">Trạng thái</th>
+		  </tr>
+		</thead>
+		
+		<tbody>
+			@foreach ($orders as $order)
+			  <tr>
+				  <td> {{ $order->order_number }} </td>
+				  {{-- <td> {{ $order->quantity }} </td> --}}
+				  <td class="text-right d-none d-sm-table-cell"> {{ $order->quantity }} </td>
+				  <td class="text-right d-none d-sm-table-cell"> {{ $order->price }} </td>
+				  <td class="text-right"> {{ $order->status }} </td>
+			  </tr>
+		  @endforeach
+		</tbody>
 
-    <!-- DataTales Example -->
-	  <div class="card shadow mb-4">
-	    <div class="card-header py-3">
-	      <h6 class="m-0 font-weight-bold">Thống kê đơn hàng </h6>
-	    </div>
-	    <div class="card-body">
-	      <div class="table-responsive">
-	        <table class="table table-striped table-borderless table-sm" cellspacing="0">
-	          <thead>
-	            <tr>
-	              	<th>Mã đơn hàng</th>
-	              	<th class="text-right d-none d-sm-table-cell">Số lượng</th>
-	              	<th class="text-right d-none d-sm-table-cell">Thành tiền</th>
-	              	<th class="text-right">Trạng thái</th>
-	            </tr>
-	          </thead>
-	          
-	          <tbody>
-	          	@foreach ($orders as $order)
-		            <tr>
-		            	<td> {{ $order->order_number }} </td>
-			            {{-- <td> {{ $order->quantity }} </td> --}}
-			            <td class="text-right d-none d-sm-table-cell"> {{ $order->quantity }} </td>
-			            <td class="text-right d-none d-sm-table-cell"> {{ $order->price }} </td>
-			            <td class="text-right"> {{ $order->status }} </td>
-		            </tr>
-	            @endforeach
-	          </tbody>
+		<tfoot>
+		  <tr>
+			  <th></th>
+				<th class="text-right d-none d-sm-table-cell">Tổng đơn hàng:</th>
+				<th class="text-right d-none d-sm-table-cell"> {{ $orders->count('order_number') }} </th>
+		  </tr>
+		  <tr>
+			  <th></th>
+				<th class="text-right d-none d-sm-table-cell">Mới:</th>
+				<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','new')->count('order_number') }} </th>
+		  </tr>
+		  <tr>
+			  <th></th>
+				<th class="text-right d-none d-sm-table-cell">Đang giao:</th>
+				<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','process')->count('order_number') }} </th>
+		  </tr>
+		  <tr>
+			  <th></th>
+				<th class="text-right d-none d-sm-table-cell">Đã nhận:</th>
+				<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','delivered')->count('order_number') }} </th>
+		  </tr>
+		  <tr>
+			  <th></th>
+				<th class="text-right d-none d-sm-table-cell">Đã hủy:</th>
+				<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','cancel')->count('order_number') }} </th>
+		  </tr>
+		</tfoot>
 
-	          <tfoot>
-	            <tr>
-	            	<th></th>
-	              	<th class="text-right d-none d-sm-table-cell">Tổng đơn hàng:</th>
-	              	<th class="text-right d-none d-sm-table-cell"> {{ $orders->count('order_number') }} </th>
-	            </tr>
-				<tr>
-	            	<th></th>
-	              	<th class="text-right d-none d-sm-table-cell">Mới:</th>
-	              	<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','new')->count('order_number') }} </th>
-	            </tr>
-				<tr>
-	            	<th></th>
-	              	<th class="text-right d-none d-sm-table-cell">Đang giao:</th>
-	              	<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','process')->count('order_number') }} </th>
-	            </tr>
-				<tr>
-	            	<th></th>
-	              	<th class="text-right d-none d-sm-table-cell">Đã nhận:</th>
-	              	<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','delivered')->count('order_number') }} </th>
-	            </tr>
-				<tr>
-	            	<th></th>
-	              	<th class="text-right d-none d-sm-table-cell">Đã hủy:</th>
-	              	<th class="text-right d-none d-sm-table-cell"> {{ $orders->where('status','cancel')->count('order_number') }} </th>
-	            </tr>
-	          </tfoot>
-
-	        </table>
-	      </div>
-	    </div>
-	  </div>
+	  </table>
+	  <span style="float:right">{{$orders->links()}}</span>
+	</div>
+  </div>
 
 	  <div class="row">
 
@@ -84,7 +75,7 @@
 			<div class="card shadow mb-4">
 			  <!-- Card Header - Dropdown -->
 			  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-				<h6 class="m-0 font-weight-bold text-primary">Doanh số bán hàng</h6>
+				<h6 class="m-0 font-weight-bold text-primary">Biểu đồ thống kê đơn hàng</h6>
 				
 			  </div>
 			  <!-- Card Body -->
@@ -107,16 +98,12 @@
 					</div>
 				</div>
 			</div>
-		
-
-		
 	</div>
 
 		
 
 
 @endsection
-
 @push('scripts')
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -226,7 +213,7 @@
 				tooltips: {
 					titleMarginBottom: 10,
 					titleFontColor: '#6e707e',
-					titleFontSize: 18,
+					titleFontSize: 14,
 					backgroundColor: "rgb(255,255,255)",
 					bodyFontColor: "#858796",
 					borderColor: '#dddfeb',

@@ -24,7 +24,8 @@ class OrderStatisticController extends Controller
                                                 'orders.created_at', DB::raw("orders.status as status_qty"))
                                         // ->select(DB::raw('count(orders.status) as quantity', 'orders.status'))
 								    	->join('products', 'orders.product_id', '=', 'products.id')
-								    	->get();
+								    	->orderBy('orders.id', 'ASC')
+                                        ->paginate(5);
         $pieChart = DB::select(DB::raw("select status, COUNT(status) as status_qty
                     from orders
                     group by orders.status

@@ -35,8 +35,8 @@
 							<h4>Dịch vụ chăm sóc khách hàng</h4>
 							<ul>
 								<li><a href="#">Phương thức thanh toán</a></li>
-								<li><a href="#">Chính sách hoàn tiền</a></li>
-								<li><a href="#">Chính sách đổi trả</a></li>
+								<li><a href="{{route('warranty-product')}}">Chính sách bảo hành</a></li>
+								<li><a href="{{route('return-policy')}}">Chính sách đổi trả</a></li>
 								<li><a href="#">Vận chuyển</a></li>
 								<li><a href="#">Chính sách bảo mật</a></li>
 							</ul>
@@ -70,7 +70,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>Bản quyền thuộc về © {{date('Y')}} <a href="https://github.com/mercenary962" target="_blank">HennryJones</a></p>
+								<p>© {{date('Y')}} <a href="https://github.com/mercenary962" target="_blank">HennryJones</a></p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">

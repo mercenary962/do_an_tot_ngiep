@@ -8,7 +8,8 @@ use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Product;
 use App\User;
-use \PDF;
+use Barryvdh\DomPDF\Facade as PDF;
+// use PDF;
 use Illuminate\Support\Facades\Notification;
 use Helper;
 use Illuminate\Support\Str;
@@ -106,9 +107,6 @@ class OrderController extends Controller
             $order_data['payment_method']='cod';
             $order_data['payment_status']='Unpaid';
         }
-        // if($request->status=='delivered' && $request->payment_method=='cod'){
-        //     $order_data['payment_status']='paid';
-        // }
         $order->fill($order_data);
         $order->save();
         if($order)
@@ -171,6 +169,8 @@ class OrderController extends Controller
         $order=Order::find($id);
         $this->validate($request,[
             'status'=>'required|in:new,process,delivered,cancel',
+            // 'payment_method' => 'required|in:cod,vnpay',
+            // 'payment_status' => 'required|in:unpaid,paid',
         ]);
         $data=$request->all();
         // return $request->status;
@@ -195,8 +195,9 @@ class OrderController extends Controller
                 }
             }
         }
-        if(($request->method=='cod') && ($request->status=='delivered')){
+        if(($request->status=='delivered') && ($order->payment_method=='cod')){
             $order->payment_status='paid';
+            $order->save();
         }
         $status=$order->fill($data)->save();
         if($status){

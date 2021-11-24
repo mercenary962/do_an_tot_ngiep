@@ -65,21 +65,6 @@
                                name="phone" type="text" value="{{ auth()->user()->phone }}"/>
                     </div>
 
-                    {{-- <div class="form-group">
-                        <label for="shipping">Vận chuyển:</label>
-                        <input class="form-control" id="shipping"
-                               name="shipping" type="text" value="{{ $shipping }}"/>
-                        {{-- @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
-                            <select name="shipping" class="form-control">
-                                <option value="">Chọn đơn vị chuyển phát</option>
-                                @foreach(Helper::shipping() as $shipping)
-                                <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: {{$shipping->price}} đ</option>
-                                @endforeach
-                            </select>
-                        @endif --}}
-                    {{-- </div> --}}
-
-
                     <div class="form-group">
                         <label for="order_desc">Nội dung thanh toán</label>
                         <textarea class="form-control" cols="20" id="order_desc" name="order_desc" rows="2" placeholder="Noi dung thanh toan"></textarea>

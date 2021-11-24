@@ -163,7 +163,7 @@
                                                 </a>
                                                 <div class="button-head">
                                                     <div class="product-action">
-                                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Mua ngay" href="#"><i class=" ti-eye"></i><span>Mua ngay</span></a>
+                                                        {{-- <a data-toggle="modal" data-target="#{{$product->id}}" title="Mua ngay" href="#"><i class=" ti-eye"></i><span>Mua ngay</span></a> --}}
                                                         <a title="Yêu thích" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Thêm vào Yêu thích</span></a>
                                                     </div>
                                                     <div class="product-action-2">
@@ -183,7 +183,7 @@
                                     </div>
                                 @endforeach
                             @else
-                                    <h4 class="text-warning" style="margin:100px auto;">Không có sản phẩm trong giỏ hàng.</h4>
+                                    <h4 class="text-warning" style="margin:100px auto;">Không tìm thấy sản phẩm.</h4>
                             @endif
                             
 

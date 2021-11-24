@@ -298,12 +298,10 @@
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
-                                                <a data-toggle="modal" data-target="#modelExample" title="Quick View" href="#"><i class=" ti-eye"></i><span>Mua nhanh</span></a>
-                                                <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Thêm vào Sản phẩm yêu thích</span></a>
-                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
+                                                <a title="Wishlist" href="{{route('add-to-wishlist',$product_detail->slug)}}" class="wishlist" data-id="{{$product_detail->id}}"><i class=" ti-heart "></i><span>Thêm vào Yêu thích</span></a>
                                             </div>
                                             <div class="product-action-2">
-                                                <a title="Add to cart" href="#">Thêm vào giỏ hàng</a>
+                                                <a title="Thêm vào giỏ hàng" href="{{route('add-to-cart',$product_detail->slug)}}">Thêm vào giỏ hàng</a>
                                             </div>
                                         </div>
                                     </div>

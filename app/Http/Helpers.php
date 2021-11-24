@@ -49,13 +49,6 @@ class Helper{
         return Category::has('products')->orderBy('id','DESC')->get();
     }
 
-    public static function postTagList($option='all'){
-        if($option='all'){
-            return PostTag::orderBy('id','desc')->get();
-        }
-        return PostTag::has('posts')->orderBy('id','desc')->get();
-    }
-
     public static function postCategoryList($option="all"){
         if($option='all'){
             return PostCategory::orderBy('id','DESC')->get();
@@ -73,10 +66,6 @@ class Helper{
             return 0;
         }
     }
-    // relationship cart with product
-    // public function product(){
-    //     return $this->hasOne('App\Models\Product','id','product_id');
-    // }
 
     public static function getAllProductFromCart($user_id=''){
         if(Auth::check()){
@@ -126,20 +115,6 @@ class Helper{
             return 0;
         }
     }
-
-    // Total price with shipping and coupon
-    // public static function grandPrice($id,$user_id){
-    //     $order=Order::find($id);
-    //     dd($id);
-    //     if($order){
-    //         $shipping_price=(float)$order->shipping->price;
-    //         $order_price=self::orderPrice($id,$user_id);
-    //         return number_format((float)($order_price+$shipping_price),2,'.','');
-    //     }else{
-    //         return 0;
-    //     }
-    // }
-
 
     // Admin home
     public static function earningPerMonth(){
